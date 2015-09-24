@@ -44,6 +44,7 @@ void sudoku_print(Sudoku sudoku) {
 extern void sudoku_empty(Sudoku sudoku) {
 	int i, size = sudoku->size;
 	for (i=0; i < (size*size); i++) sudoku->sudoku_array[i] = 0;
+	while (1) printf("ll0");//ZZZDELETE
 }
 extern void sudoku_default(Sudoku sudoku) {
 	int i, size=sudoku->size;
@@ -177,7 +178,22 @@ void sudoku_flip_dia2(Sudoku sudoku) {
 
 
 
-
+//Basic testing code for each function
+//#define SUDOKU_TEST
+#ifdef SUDOKU_TEST
+int main(void) {
+	
+	Sudoku my_sudoku = sudoku_new(9); //Create
+	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
+	sudoku_print(my_sudoku); //Print
+	printf("\n"); 
+	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
+	sudoku_delete_space(my_sudoku, 70); //Deletes spaces a random percentage
+	sudoku_print(my_sudoku);
+	printf("\n");
+	sudoku_free(my_sudoku); 
+}
+#endif
 
 
 

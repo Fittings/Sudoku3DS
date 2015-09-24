@@ -12,11 +12,7 @@ int main()
 	gfxInitDefault();
 	
 	//SOME TEST CODE
-	Sudoku my_sudoku = sudoku_new(SU_SIZE);
-	sudoku_transform(my_sudoku);
-	sudoku_delete_space(my_sudoku, SU_RAND);
-	sudoku_print(my_sudoku);
-	sudoku_free(my_sudoku);
+
 	
 
 	//gfxSet3D(true); // uncomment if using stereoscopic 3D
