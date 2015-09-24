@@ -1,4 +1,5 @@
 #include <stdlib.h> //malloc, rand
+#include <string.h> //memset
 #include <stdio.h> //printf
 #include <time.h> //time
 #include <math.h> //sqrt
@@ -41,12 +42,12 @@ void sudoku_print(Sudoku sudoku) {
 	}
 	printf("\n");
 }
-extern void sudoku_empty(Sudoku sudoku) {
+void sudoku_empty(Sudoku sudoku) {
 	int i, size = sudoku->size;
 	for (i=0; i < (size*size); i++) sudoku->sudoku_array[i] = 0;
 	while (1) printf("ll0");//ZZZDELETE
 }
-extern void sudoku_default(Sudoku sudoku) {
+void sudoku_default(Sudoku sudoku) {
 	int i, size=sudoku->size;
 	int divisor = sqrt(size); //used to know when we pass box dividers
 	for (i=0; i < size; i++) { //initialize 0 to size-1
@@ -65,7 +66,7 @@ extern void sudoku_default(Sudoku sudoku) {
 
 
 //Deletes values of the sudoku puzzle with a percentage chance
-extern void sudoku_delete_space(Sudoku sudoku, int percentage) {
+void sudoku_delete_space(Sudoku sudoku, int percentage) {
 	srand(time(NULL));
 	int array_size = sudoku->size * sudoku->size;
 	int i;
@@ -177,6 +178,27 @@ void sudoku_flip_dia2(Sudoku sudoku) {
 }
 
 
+//Checks every horizontal row for validity
+int check_horizontals(Sudoku sudoku) {
+	int size = sudoku->size, i;
+	int valid_array[size];
+	memset(valid_array, 0, size * sizeof(int)); //init all to 0
+	printf("Starting for loop");
+	for (i=0; i < (size * size); i++) {
+		if (i % size == 0) memset(valid_array, 0, size * sizeof(int)); //New row, reset array
+		if (valid_array[i % size] == 1) {
+			printf("failed i: %i\n", i);
+			return 0; //value already exists on horizontal. Fail
+			}
+		valid_array[i % size] = 1;
+		printf("iteration: %i\n", i);
+	}
+	return 1;
+}
+
+
+
+
 
 //Basic testing code for each function
 //#define SUDOKU_TEST
@@ -186,12 +208,18 @@ int main(void) {
 	Sudoku my_sudoku = sudoku_new(9); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	sudoku_print(my_sudoku); //Print
-	printf("\n"); 
+	printf("\nTransform\n");
+	sudoku_print(my_sudoku);
 	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
+	printf("\nCheckHori\nHorizontals Valid: %i\n", check_horizontals(my_sudoku));
+	
+	printf("DeleteSpaces\n");
+	
 	sudoku_delete_space(my_sudoku, 70); //Deletes spaces a random percentage
 	sudoku_print(my_sudoku);
-	printf("\n");
+	printf("Free\n");
 	sudoku_free(my_sudoku); 
+	printf("Done\n");
 }
 #endif
 
