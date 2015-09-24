@@ -36,7 +36,7 @@ main.o: c:/3ds_dev/Sudoku3DS/source/main.c \
  c:/devkitPro/libctru/include/3ds/gpu/shbin.h \
  c:/devkitPro/libctru/include/3ds/gpu/shaderProgram.h \
  c:/devkitPro/libctru/include/3ds/sdmc.h \
- c:/3ds_dev/Sudoku3DS/source/sudoku.h
+ c:/3ds_dev/Sudoku3DS/include/sudoku.h
 
 c:/devkitPro/libctru/include/3ds.h:
 
@@ -112,4 +112,4 @@ c:/devkitPro/libctru/include/3ds/gpu/shaderProgram.h:
 
 c:/devkitPro/libctru/include/3ds/sdmc.h:
 
-c:/3ds_dev/Sudoku3DS/source/sudoku.h:
+c:/3ds_dev/Sudoku3DS/include/sudoku.h:

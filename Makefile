@@ -32,7 +32,7 @@ SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
 APP_TITLE   :=  Sudoku3DS
-APP_DESCRIPTION:= My first attempt running Sudoku3DS
+APP_DESCRIPTION:= Attempt 2 at running Sudoku3DS
 APP_AUTHOR  := Fittings
 
 

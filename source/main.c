@@ -5,7 +5,7 @@
 #include "sudoku.h"
 
 #define SU_SIZE 9
-#define SU_RAND 70
+#define SU_RAND 50
 
 int main()
 {
