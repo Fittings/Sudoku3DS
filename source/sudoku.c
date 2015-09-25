@@ -56,7 +56,6 @@ void sudoku_default(Sudoku sudoku) {
 	}
 	int row_counter = 1;
 	for (i=size; i < (size * size); i++) {
-		//printf("row:%i, i:%i\n", row_counter, i);
 		if (i % size == 0) 	row_counter++; //new row
 		if ((row_counter-1) % divisor == 0) { //if on divisor+1 row
 			int offset = ((row_counter-1) / divisor);
@@ -90,20 +89,15 @@ void sudoku_transform(Sudoku sudoku) {
 	while (i < 5000) { //Magic number, I know...
 		i++;
 		int val = rand_lim(100);
-		//printf("%i ", val);
 		if (0  <= val && val <  25) {
-			//printf("flip vert\n");
 			sudoku_flip_vert(sudoku);
 		} else if (25 <= val && val <  50) {
-			//printf("flip hori\n");
 			sudoku_flip_hori(sudoku);
 		}
 		else if (50 <= val && val <  75) {
-			//printf("flip dia1\n");
 			sudoku_flip_dia1(sudoku);
 		}
 		else if (75 <= val && val < 100) {
-			//printf("flip dia2\n");
 			sudoku_flip_dia2(sudoku);
 		}
 		
@@ -133,11 +127,12 @@ void sudoku_flip_hori(Sudoku sudoku) {
 	int size = sudoku->size;
 	int i, box = sqrt(size);
 	for (i=0; i < (size * size); i++) {
-		if ( i/9 < box+1 ) {
+		if ( (i/size ) < (size/2) ) {
+			//printf("hello world\n");
 			int tmp = sudoku->sudoku_array[i];
 			int mod_siz = i % size;
 			int div_siz = i / size;
-			int tmpIx = mod_siz + (8 - div_siz) * size;
+			int tmpIx = mod_siz + ((size-1) - div_siz) * size;
 			sudoku->sudoku_array[i] = sudoku->sudoku_array[tmpIx];
 			sudoku->sudoku_array[tmpIx] = tmp;
 			
@@ -150,9 +145,9 @@ void sudoku_flip_hori(Sudoku sudoku) {
 void sudoku_flip_dia1(Sudoku sudoku) {
 	int i, size = sudoku->size;
 	for (i=0; i < (size * size); i++) {
-		if ((i / size + i % size) < 8) {
+		if ((i / size + i % size) < (size-1)) {
 			int mod_siz = i % size;
-			int div_siz = i / 9;
+			int div_siz = i / size;
 			int tmp = sudoku->sudoku_array[i];
 			int tmpIx = (size-1 - mod_siz) * size + size-1 - div_siz;
 			sudoku->sudoku_array[i] = sudoku->sudoku_array[tmpIx];
@@ -193,34 +188,34 @@ int check_horizontals(Sudoku sudoku) {
 			return 0; //value already exists on horizontal. Fail
 			}
 		valid_array[i % size] = 1;
-		printf("iteration: %i\n", i);
 	}
 	return 1;
 }
 
-#ifdef VERT
+
 int check_verticals(Sudoku sudoku) {
 	int size = sudoku->size, i, j;
 	int valid_array[size];
 	memset(valid_array, 0, size * sizeof(int)); //init all to 0
-	for (j=0; j < (size * size); j++);
+	for (j=0; j < (size * size); j++) {
 	}
 	return 1;
 }
-#endif
+
 
 
 
 //Basic testing code for each function
 #ifdef SUDOKU_TEST
 int main(void) {
-	Sudoku my_sudoku = sudoku_new(25); //Create
+	Sudoku my_sudoku = sudoku_new(9); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	sudoku_print(my_sudoku); //Print
-	//printf("\nTransform\n");
-	//sudoku_print(my_sudoku);
-	//sudoku_flip_vert(my_sudoku); //Flips on many axes to create a unique sudoku
-	//printf("\nCheckHori\nHorizontals Valid: %i\n", check_horizontals(my_sudoku));
+	printf("\nTransform\n");
+	sudoku_flip_hori(my_sudoku); //Flips on many axes to create a unique sudoku
+	sudoku_print(my_sudoku);
+	//printf("\nCheckHori: Horizontals Valid?: %i\n", check_horizontals(my_sudoku));
+	//printf("\nCheckVert: Verticals Valid?: %i\n", check_verticals(my_sudoku));
 	//sudoku_print(my_sudoku);
 	printf("\n");
 	

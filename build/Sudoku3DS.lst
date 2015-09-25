@@ -31,11 +31,12 @@
 0010033c 000000f4 T sudoku_default
 00100430 00000070 T sudoku_delete_space
 001004a0 0000007c T sudoku_flip_vert
-0010051c 00000094 T sudoku_flip_hori
-001005b0 00000090 T sudoku_flip_dia1
-00100640 0000008c T sudoku_flip_dia2
-001006cc 00000094 T sudoku_transform
-00100760 000000c8 T check_horizontals
+0010051c 00000078 T sudoku_flip_hori
+00100594 0000007c T sudoku_flip_dia1
+00100610 0000008c T sudoku_flip_dia2
+0010069c 00000094 T sudoku_transform
+00100730 000000c4 T check_horizontals
+001007f4 00000034 T check_verticals
 00100828 0000008c t gfxSetFramebufferInfo.part.0
 001008b4 00000010 T gfxSet3D
 001008c4 00000018 T gfxSetScreenFormat
@@ -532,27 +533,27 @@
 0011d0e4 00000003 R DIRECTORY_PARENT
 0011d0e8 00000002 R DIRECTORY_THIS
 0011d0ec 00000002 R DIRECTORY_SEPARATOR
-0011d260 00000004 R _global_impure_ptr
-0011d264 00000010 r zeroes.7052
-0011d2b4 r .LC2
-0011d2b8 00000010 r blanks.7051
-0011d3fc 0000001c r categories
-0011d418 00000048 r JIS_state_table
-0011d460 00000048 r JIS_action_table
-0011d4a8 0000000c r p05.5298
-0011d4b8 000000c8 R __mprec_tens
-0011d580 00000028 R __mprec_bigtens
-0011d5a8 00000028 R __mprec_tinytens
-0011d5d0 0000006c R __state_table
-0011d63c 00000010 r blanks.7015
-0011d64c 00000100 R __chclass
-0011d74c 0000006c R __action_table
-0011d7b8 00000010 r zeroes.7016
-0011d7c8 00000010 r zeroes.7030
-0011d7d8 00000010 r blanks.7029
-0011d7e8 00000101 R _ctype_
-0011d8f4 R __exidx_end
-0011d8f4 R __exidx_start
+0011d250 00000004 R _global_impure_ptr
+0011d254 00000010 r zeroes.7052
+0011d2a4 r .LC2
+0011d2a8 00000010 r blanks.7051
+0011d3ec 0000001c r categories
+0011d408 00000048 r JIS_state_table
+0011d450 00000048 r JIS_action_table
+0011d498 0000000c r p05.5298
+0011d4a8 000000c8 R __mprec_tens
+0011d570 00000028 R __mprec_bigtens
+0011d598 00000028 R __mprec_tinytens
+0011d5c0 0000006c R __state_table
+0011d62c 00000010 r blanks.7015
+0011d63c 00000100 R __chclass
+0011d73c 0000006c R __action_table
+0011d7a8 00000010 r zeroes.7016
+0011d7b8 00000010 r zeroes.7030
+0011d7c8 00000010 r blanks.7029
+0011d7d8 00000101 R _ctype_
+0011d8e4 R __exidx_end
+0011d8e4 R __exidx_start
 0011e000 D __dso_handle
 0011e004 00000001 d topFormat
 0011e005 00000001 d botFormat
