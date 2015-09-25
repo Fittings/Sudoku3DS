@@ -175,14 +175,12 @@ void sudoku_flip_dia2(Sudoku sudoku) {
 
 //Checks every horizontal row for validity
 int check_horizontals(Sudoku sudoku) {
-	int size = sudoku->size, i, j;
+	int size = sudoku->size, i;
 	int valid_array[size];
 	memset(valid_array, 0, size * sizeof(int)); //init all to 0
 	for (i=0; i < (size * size); i++) {
 		if (i % (size) == 0) memset(valid_array, 0, size * sizeof(int)); //New row, reset valids	
 		if (valid_array[sudoku->sudoku_array[i]-1] == 1) { //value already exists on horizontal. Fail
-			for(j=0; j < size; j++) printf("%i ", valid_array[j]);
-			printf("failed i: %i with value: %i \n", i, sudoku->sudoku_array[i]); printf("\n");
 			return 0; 
 			}
 		valid_array[sudoku->sudoku_array[i]-1] = 1;
@@ -190,27 +188,45 @@ int check_horizontals(Sudoku sudoku) {
 	return 1; //Every horizontal is fine. Pass
 }
 
-
+//Check every vertical row for validity.
 int check_verticals(Sudoku sudoku) {
 	int size = sudoku->size, i, j;
 	int valid_array[size];
 	memset(valid_array, 0, size * sizeof(int)); //init all to 0
 	
-	for (i=0; i < size; i++) {
+	for (i=0; i < size; i++) { //i represents the column
 		memset(valid_array, 0, size * sizeof(int));
-		for (j=i+0; j < (size * size); j+=size){
-			if (valid_array[sudoku->sudoku_array[j]-1] == 1) { //value already exists on vert. Fail
-				printf("failed j: %i with value: %i \n", j, sudoku->sudoku_array[j]);
-				int k; for(k=0; k < size; k++) printf("%i ", valid_array[i]); printf("\n");
-				return 0; 
-			}
+		for (j=i+0; j < (size * size); j+=size){ //j is the offset for the column
+			if (valid_array[sudoku->sudoku_array[j]-1] == 1) return 0;  //value already exists on vert. Fail
 			valid_array[sudoku->sudoku_array[j]-1] = 1;
 		} 
-		
-		
-		
 	}
 	return 1; //Every vertical is fine. Pass
+}
+
+//Checks every box is valid
+int check_boxes(Sudoku sudoku) {
+	int i=0,k, size=sudoku->size, divisor=sqrt(size), curr_val;
+	int valid_array[size];
+	memset(valid_array, 0, size * sizeof(int)); //init all to 0
+	
+	while (i < (size * size)) { //Check i is inbounds
+		for (k=0; k<divisor; k++) { //Inside the box, check the values of all values on the vertical
+			curr_val = sudoku->sudoku_array[i + (k * size)]-1;
+			if (valid_array[curr_val] == 1) {
+				return 0; //value already exists in box. Fail
+			}
+			valid_array[curr_val] = 1; //Value doesn't exist. Add to valid_array
+		}
+		i++;
+		if (i % size == 0) { //end of row
+			memset(valid_array, 0, size * sizeof(int));
+			i += (size * (divisor-1)); //skip to the next vertical block 
+		} else if (i % divisor == 0) { //new hori
+			memset(valid_array, 0, size * sizeof(int));
+		}
+	}
+	return 1; //Every Box is fine. Pass
 }
 
 
@@ -219,16 +235,18 @@ int check_verticals(Sudoku sudoku) {
 //Basic testing code for each function
 #ifdef SUDOKU_TEST
 int main(void) {
-	Sudoku my_sudoku = sudoku_new(16); //Create
+	Sudoku my_sudoku = sudoku_new(4); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	sudoku_print(my_sudoku); //Print
 	printf("\nTransform\n");
 	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
 	//my_sudoku->sudoku_array[9] = 1;//ZZZ TESTING
+	//my_sudoku->sudoku_array[9] = 1;
 	sudoku_print(my_sudoku);
 	
 	printf("Hors?: %i\n", check_horizontals(my_sudoku));
-	printf("Verts?:%i\n", check_verticals(my_sudoku));
+	printf("Vert?: %i\n", check_verticals(my_sudoku));
+	printf("Boxs?: %i\n", check_boxes(my_sudoku));
 	//sudoku_print(my_sudoku);
 	printf("\n");
 	
