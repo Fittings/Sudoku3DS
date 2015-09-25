@@ -42,11 +42,12 @@ void sudoku_print(Sudoku sudoku) {
 	}
 	printf("\n");
 }
+//Not really needed when you can use memset? Need to look this up.
 void sudoku_empty(Sudoku sudoku) {
 	int i, size = sudoku->size;
 	for (i=0; i < (size*size); i++) sudoku->sudoku_array[i] = 0;
-	while (1) printf("ll0");//ZZZDELETE
 }
+
 void sudoku_default(Sudoku sudoku) {
 	int i, size=sudoku->size;
 	int divisor = sqrt(size); //used to know when we pass box dividers
@@ -55,11 +56,12 @@ void sudoku_default(Sudoku sudoku) {
 	}
 	int row_counter = 1;
 	for (i=size; i < (size * size); i++) {
-		if (i % size == 0) row_counter++;
-		if ((row_counter-1) % divisor == 0) {
+		//printf("row:%i, i:%i\n", row_counter, i);
+		if (i % size == 0) 	row_counter++; //new row
+		if ((row_counter-1) % divisor == 0) { //if on divisor+1 row
 			int offset = ((row_counter-1) / divisor);
-			sudoku->sudoku_array[i] = (sudoku->sudoku_array[(0 + i +(size-offset)) % (size)]);
-		} else sudoku->sudoku_array[i] = ((sudoku->sudoku_array[i-size] + 2) % (9-1+1))+1;
+			sudoku->sudoku_array[i] = (sudoku->sudoku_array[(i-offset) % size]);
+		} else sudoku->sudoku_array[i] = sudoku->sudoku_array[(i-(i%size))-size + ((i+divisor) % size)];
 	} //sudoku->sudoku_array[i] = (sudoku->sudoku_array[i-size]+divisor) % (size);
 
 }
@@ -113,9 +115,9 @@ void sudoku_transform(Sudoku sudoku) {
 
 void sudoku_flip_vert(Sudoku sudoku) {
 	int size = sudoku->size;
-	int i, box = sqrt(size);
+	int i; //box = sqrt(size);
 	for (i=0; i < (size * size); i++) {
-		if ( (i % size) < (box+1) ) {
+		if ( (i % size) < (size/2) ) { //if less than half, swap
 			int tmp = sudoku->sudoku_array[i];
 			int div_siz = i / size;
 			int tmpIx = ((size * div_siz) + size - 1) - (i - (size * div_siz));
@@ -196,27 +198,36 @@ int check_horizontals(Sudoku sudoku) {
 	return 1;
 }
 
-
+#ifdef VERT
+int check_verticals(Sudoku sudoku) {
+	int size = sudoku->size, i, j;
+	int valid_array[size];
+	memset(valid_array, 0, size * sizeof(int)); //init all to 0
+	for (j=0; j < (size * size); j++);
+	}
+	return 1;
+}
+#endif
 
 
 
 //Basic testing code for each function
-//#define SUDOKU_TEST
 #ifdef SUDOKU_TEST
 int main(void) {
-	
-	Sudoku my_sudoku = sudoku_new(9); //Create
+	Sudoku my_sudoku = sudoku_new(25); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	sudoku_print(my_sudoku); //Print
-	printf("\nTransform\n");
-	sudoku_print(my_sudoku);
-	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
-	printf("\nCheckHori\nHorizontals Valid: %i\n", check_horizontals(my_sudoku));
+	//printf("\nTransform\n");
+	//sudoku_print(my_sudoku);
+	//sudoku_flip_vert(my_sudoku); //Flips on many axes to create a unique sudoku
+	//printf("\nCheckHori\nHorizontals Valid: %i\n", check_horizontals(my_sudoku));
+	//sudoku_print(my_sudoku);
+	printf("\n");
 	
-	printf("DeleteSpaces\n");
+	//printf("DeleteSpaces\n");
 	
-	sudoku_delete_space(my_sudoku, 70); //Deletes spaces a random percentage
-	sudoku_print(my_sudoku);
+	//sudoku_delete_space(my_sudoku, 70); //Deletes spaces a random percentage
+	//sudoku_print(my_sudoku);
 	printf("Free\n");
 	sudoku_free(my_sudoku); 
 	printf("Done\n");
