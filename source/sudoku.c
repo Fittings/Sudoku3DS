@@ -115,7 +115,6 @@ void sudoku_flip_vert(Sudoku sudoku) {
 			int tmp = sudoku->sudoku_array[i];
 			int div_siz = i / size;
 			int tmpIx = ((size * div_siz) + size - 1) - (i - (size * div_siz));
-			//printf("div_siz: %i, tmpIx: %i", div_siz, tmpIx);
 			sudoku->sudoku_array[i] = sudoku->sudoku_array[tmpIx];
 			sudoku->sudoku_array[tmpIx] = tmp;
 		}
@@ -125,10 +124,9 @@ void sudoku_flip_vert(Sudoku sudoku) {
 
 void sudoku_flip_hori(Sudoku sudoku) {
 	int size = sudoku->size;
-	int i, box = sqrt(size);
+	int i;
 	for (i=0; i < (size * size); i++) {
 		if ( (i/size ) < (size/2) ) {
-			//printf("hello world\n");
 			int tmp = sudoku->sudoku_array[i];
 			int mod_siz = i % size;
 			int div_siz = i / size;
@@ -163,11 +161,11 @@ void sudoku_flip_dia1(Sudoku sudoku) {
 void sudoku_flip_dia2(Sudoku sudoku) {
 	int i, size = sudoku->size;
 	for (i=0; i < (size * size); i++) {
-		if ( (i / 9) > (i % 9)) {
+		if ( (i / size) > (i % size)) {
 			int mod_siz = i % size;
-			int div_siz = i / 9;
+			int div_siz = i / size;
 			int tmp = sudoku->sudoku_array[i];
-			int tmpIx = div_siz + mod_siz * 9;
+			int tmpIx = div_siz + mod_siz * size;
 			sudoku->sudoku_array[i] = sudoku->sudoku_array[tmpIx];
 			sudoku->sudoku_array[tmpIx] = tmp;
 		}
@@ -177,19 +175,19 @@ void sudoku_flip_dia2(Sudoku sudoku) {
 
 //Checks every horizontal row for validity
 int check_horizontals(Sudoku sudoku) {
-	int size = sudoku->size, i;
+	int size = sudoku->size, i, j;
 	int valid_array[size];
 	memset(valid_array, 0, size * sizeof(int)); //init all to 0
-	printf("Starting for loop");
 	for (i=0; i < (size * size); i++) {
-		if (i % size == 0) memset(valid_array, 0, size * sizeof(int)); //New row, reset array
-		if (valid_array[i % size] == 1) {
-			printf("failed i: %i\n", i);
-			return 0; //value already exists on horizontal. Fail
+		if (i % (size) == 0) memset(valid_array, 0, size * sizeof(int)); //New row, reset valids	
+		if (valid_array[sudoku->sudoku_array[i]-1] == 1) { //value already exists on horizontal. Fail
+			for(j=0; j < size; j++) printf("%i ", valid_array[j]);
+			printf("failed i: %i with value: %i \n", i, sudoku->sudoku_array[i]); printf("\n");
+			return 0; 
 			}
-		valid_array[i % size] = 1;
+		valid_array[sudoku->sudoku_array[i]-1] = 1;
 	}
-	return 1;
+	return 1; //Every horizontal is fine. Pass
 }
 
 
@@ -197,9 +195,22 @@ int check_verticals(Sudoku sudoku) {
 	int size = sudoku->size, i, j;
 	int valid_array[size];
 	memset(valid_array, 0, size * sizeof(int)); //init all to 0
-	for (j=0; j < (size * size); j++) {
+	
+	for (i=0; i < size; i++) {
+		memset(valid_array, 0, size * sizeof(int));
+		for (j=i+0; j < (size * size); j+=size){
+			if (valid_array[sudoku->sudoku_array[j]-1] == 1) { //value already exists on vert. Fail
+				printf("failed j: %i with value: %i \n", j, sudoku->sudoku_array[j]);
+				int k; for(k=0; k < size; k++) printf("%i ", valid_array[i]); printf("\n");
+				return 0; 
+			}
+			valid_array[sudoku->sudoku_array[j]-1] = 1;
+		} 
+		
+		
+		
 	}
-	return 1;
+	return 1; //Every vertical is fine. Pass
 }
 
 
@@ -208,18 +219,19 @@ int check_verticals(Sudoku sudoku) {
 //Basic testing code for each function
 #ifdef SUDOKU_TEST
 int main(void) {
-	Sudoku my_sudoku = sudoku_new(9); //Create
+	Sudoku my_sudoku = sudoku_new(16); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	sudoku_print(my_sudoku); //Print
 	printf("\nTransform\n");
-	sudoku_flip_hori(my_sudoku); //Flips on many axes to create a unique sudoku
+	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
+	//my_sudoku->sudoku_array[9] = 1;//ZZZ TESTING
 	sudoku_print(my_sudoku);
-	//printf("\nCheckHori: Horizontals Valid?: %i\n", check_horizontals(my_sudoku));
-	//printf("\nCheckVert: Verticals Valid?: %i\n", check_verticals(my_sudoku));
+	
+	printf("Hors?: %i\n", check_horizontals(my_sudoku));
+	printf("Verts?:%i\n", check_verticals(my_sudoku));
 	//sudoku_print(my_sudoku);
 	printf("\n");
 	
-	//printf("DeleteSpaces\n");
 	
 	//sudoku_delete_space(my_sudoku, 70); //Deletes spaces a random percentage
 	//sudoku_print(my_sudoku);
