@@ -11,7 +11,6 @@ int main()
 {
 	gfxInitDefault();
 	
-	//SOME TEST CODE
 
 	
 
