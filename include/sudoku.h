@@ -1,7 +1,14 @@
-#ifndef SUDOKU_H
-#define SUDOKU_H
+#ifndef SUDOKU_H_
+#define SUDOKU_H_
 
 
+
+//Structure for a unknown NxN sized array. Where N = size
+struct _Sudoku {
+	int size;
+	int *sudoku_array;
+
+};
 
 typedef struct _Sudoku *Sudoku;
 

@@ -7,5 +7,6 @@
 extern void *emalloc(size_t);
 extern void *erealloc(void *, size_t);
 extern int rand_lim(int limit);
+extern int mod(int a, int b);
 
 #endif

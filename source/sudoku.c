@@ -7,12 +7,7 @@
 #include "sudoku.h"
 
 
-//Structure for a unknown NxN sized array. Where N = size
-struct _Sudoku {
-	int size;
-	int *sudoku_array;
 
-};
 
 //Creates an empty representation of Sudoku of size n
 Sudoku sudoku_new(int n) {
@@ -240,7 +235,7 @@ int main(void) {
 	sudoku_print(my_sudoku); //Print
 	printf("\nTransform\n");
 	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
-	//my_sudoku->sudoku_array[9] = 1;//ZZZ TESTING
+	my_sudoku->sudoku_array[9] = 1;//ZZZ TESTING
 	//my_sudoku->sudoku_array[9] = 1;
 	sudoku_print(my_sudoku);
 	

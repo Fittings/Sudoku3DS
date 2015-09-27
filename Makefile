@@ -26,13 +26,14 @@ include $(DEVKITARM)/3ds_rules
 #     - icon.png
 #     - <libctru folder>/default_icon.png
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
+#TARGET		:=	$(notdir $(CURDIR))
+TARGET		:=	Sudoku3DS
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
 APP_TITLE   :=  Sudoku3DS
-APP_DESCRIPTION:= Attempt 2 at running Sudoku3DS
+APP_DESCRIPTION:= Can we visualize this.
 APP_AUTHOR  := Fittings
 
 
@@ -52,13 +53,13 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lctru -lm
+LIBS	:=   -lsfil -lpng -ljpeg -lz -lsf2d -lctru -lm 
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(CTRULIB)
+LIBDIRS	:= $(SF2DLIB) $(CTRULIB) $(PORTLIBS)
 
 
 #---------------------------------------------------------------------------------

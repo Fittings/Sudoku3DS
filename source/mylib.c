@@ -39,3 +39,9 @@ int rand_lim(int limit) {
 
     return retval;
 }
+
+
+int mod(int a, int b) {
+    int r = a % b;
+    return r < 0 ? r + b : r;
+}

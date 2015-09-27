@@ -7,4 +7,5 @@ Swap an entire rows/columns of 1 box with another box.
 Port over my solver from java. Need to include a bunch of methods
 
 	#VISUAL
-Need to finally get this working visually and updating properly
+
+Need to visually represent the puzzle.

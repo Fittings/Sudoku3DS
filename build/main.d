@@ -13,6 +13,8 @@ main.o: c:/3ds_dev/Sudoku3DS/source/main.c \
  c:/devkitPro/libctru/include/3ds/services/ac.h \
  c:/devkitPro/libctru/include/3ds/services/am.h \
  c:/devkitPro/libctru/include/3ds/services/apt.h \
+ c:/devkitPro/libctru/include/3ds/services/cam.h \
+ c:/devkitPro/libctru/include/3ds/services/y2r.h \
  c:/devkitPro/libctru/include/3ds/services/cfgnor.h \
  c:/devkitPro/libctru/include/3ds/services/cfgu.h \
  c:/devkitPro/libctru/include/3ds/services/csnd.h \
@@ -28,6 +30,7 @@ main.o: c:/3ds_dev/Sudoku3DS/source/main.c \
  c:/devkitPro/libctru/include/3ds/services/soc.h \
  c:/devkitPro/libctru/include/3ds/services/mic.h \
  c:/devkitPro/libctru/include/3ds/services/mvd.h \
+ c:/devkitPro/libctru/include/3ds/services/news.h \
  c:/devkitPro/libctru/include/3ds/services/qtm.h \
  c:/devkitPro/libctru/include/3ds/services/hb.h \
  c:/devkitPro/libctru/include/3ds/gpu/gx.h \
@@ -36,7 +39,10 @@ main.o: c:/3ds_dev/Sudoku3DS/source/main.c \
  c:/devkitPro/libctru/include/3ds/gpu/shbin.h \
  c:/devkitPro/libctru/include/3ds/gpu/shaderProgram.h \
  c:/devkitPro/libctru/include/3ds/sdmc.h \
- c:/3ds_dev/Sudoku3DS/include/sudoku.h
+ c:/devkitPro/libctru/include/3ds/romfs.h \
+ c:/3ds_dev/Sudoku3DS/include/sudoku.h \
+ c:/3ds_dev/Sudoku3DS/include/mylib.h c:/devkitPro/libctru/include/sf2d.h \
+ c:/devkitPro/libctru/include/sfil.h c:/3ds_dev/Sudoku3DS/build/bg2_bin.h
 
 c:/devkitPro/libctru/include/3ds.h:
 
@@ -65,6 +71,10 @@ c:/devkitPro/libctru/include/3ds/services/ac.h:
 c:/devkitPro/libctru/include/3ds/services/am.h:
 
 c:/devkitPro/libctru/include/3ds/services/apt.h:
+
+c:/devkitPro/libctru/include/3ds/services/cam.h:
+
+c:/devkitPro/libctru/include/3ds/services/y2r.h:
 
 c:/devkitPro/libctru/include/3ds/services/cfgnor.h:
 
@@ -96,6 +106,8 @@ c:/devkitPro/libctru/include/3ds/services/mic.h:
 
 c:/devkitPro/libctru/include/3ds/services/mvd.h:
 
+c:/devkitPro/libctru/include/3ds/services/news.h:
+
 c:/devkitPro/libctru/include/3ds/services/qtm.h:
 
 c:/devkitPro/libctru/include/3ds/services/hb.h:
@@ -112,4 +124,14 @@ c:/devkitPro/libctru/include/3ds/gpu/shaderProgram.h:
 
 c:/devkitPro/libctru/include/3ds/sdmc.h:
 
+c:/devkitPro/libctru/include/3ds/romfs.h:
+
 c:/3ds_dev/Sudoku3DS/include/sudoku.h:
+
+c:/3ds_dev/Sudoku3DS/include/mylib.h:
+
+c:/devkitPro/libctru/include/sf2d.h:
+
+c:/devkitPro/libctru/include/sfil.h:
+
+c:/3ds_dev/Sudoku3DS/build/bg2_bin.h:
