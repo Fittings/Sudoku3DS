@@ -1,4 +1,3 @@
-			#TODO:
 	#INCR DIVERSITY
 Swap an entire row/column as long as in same box. 
 Swap an entire rows/columns of 1 box with another box. 
@@ -8,6 +7,19 @@ Port over my solver from java. Need to include a bunch of methods
 
 	#VISUAL
 Make the cursor loop correctly. 
+Spacing
+Interesting background
+Display on bothm screen
+
+	#INPUT
+Take touch input
 
 	#CODE FORMATTING
 Need to isolate graphical portion of code out of main
+
+	#MAKEFILE
+Need to properly update once I have finised ver 1
+
+
+	#KNOWN BUGS
+Theres a bug with checking for victory. Will give victory if the last square is empty and everything else is correct

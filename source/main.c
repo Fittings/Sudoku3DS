@@ -25,7 +25,7 @@
 #include "selector_bin.h"
 
 #define SU_SIZE 9
-#define SU_RAND 95
+#define SU_RAND 99
 
 
 
@@ -33,6 +33,7 @@ int percentage;
 int size;
 int cursor;
 int new_value, value;
+u32 kDown;
 Sudoku my_sudoku;
 sf2d_texture *bg, *immut_numbers, *mut_numbers, *selector;
 
@@ -114,11 +115,18 @@ void draw_frame() {
 //draw bg
 //draw sudoku_puzzle - check for mutable
 //draw selector
+//draw victory box
 
 	sf2d_start_frame(GFX_TOP, GFX_LEFT); //FRAME BEGIN
 	sf2d_draw_texture(bg, 0, 0);
     draw_sudoku();
 	sf2d_draw_texture(selector, cursor%my_sudoku->size * 25, cursor/my_sudoku->size * 25);
+	
+	if (check_all(my_sudoku)) {
+		sf2d_draw_rectangle(390, 230, 10, 10, RGBA8(0xFF, 0xFF, 0xFF, 0xFF)); //draw victory box
+	} else {
+		sf2d_draw_rectangle(390, 230, 10, 10, RGBA8(0x00, 0xFF, 0xFF, 0xFF)); //draw defeata
+	}
 			
     sf2d_end_frame(); //FRAME END
 
@@ -128,10 +136,7 @@ void draw_frame() {
 //takes keys_down and all that
 int check_input() {
 
-	hidScanInput();
-	u32 kDown = hidKeysDown();
-	if (kDown & KEY_START) abort();
-	if (kDown & KEY_SELECT) abort();
+	
 	if (kDown & KEY_A) new_value = mod(my_sudoku->sudoku_array[cursor]+1, my_sudoku->size+1);
 	else if (kDown & KEY_B) new_value = mod(my_sudoku->sudoku_array[cursor]-1, my_sudoku->size+1);
 		
@@ -155,13 +160,10 @@ void update_game() {
 	
 	draw_frame();
 	
+	
 	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT); //FRAME BEGIN
-	if (check_all(my_sudoku)) {
-		sf2d_draw_rectangle(310, 230, 10, 10, RGBA8(0xFF, 0xFF, 0xFF, 0xFF)); //draw victory box
-	} else {
-		sf2d_draw_rectangle(310, 230, 10, 10, RGBA8(0x00, 0xFF, 0xFF, 0xFF)); //draw defeata
-	}
-	sf2d_end_frame();
+	
+	sf2d_end_frame(); 
 
 }
 
@@ -174,7 +176,12 @@ int main()
 	
 	int flip = 0;
     while (aptMainLoop()) {
-
+	
+		hidScanInput();
+		kDown = hidKeysDown();
+		if (kDown & KEY_START) break;
+		if (kDown & KEY_SELECT) break;
+	
 	
 		flip = 1-flip;
 		update_game();
@@ -184,7 +191,7 @@ int main()
  
       
             
-        sf2d_end_frame();
+        
  
         sf2d_swapbuffers();
     }
