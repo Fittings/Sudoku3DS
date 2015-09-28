@@ -25,14 +25,14 @@
 #include "selector_bin.h"
 
 #define SU_SIZE 9
-#define SU_RAND 50
-#define EXIT 0
+#define SU_RAND 95
+
 
 
 int percentage;
 int size;
 int cursor;
-int value;
+int new_value, value;
 Sudoku my_sudoku;
 sf2d_texture *bg, *immut_numbers, *mut_numbers, *selector;
 
@@ -66,11 +66,12 @@ int initialize_game(int the_size, int the_percentage) {
 	size = the_size;
 	my_sudoku = sudoku_new(size); 
 	sudoku_default(my_sudoku); 
-	//sudoku_transform(my_sudoku); 
-	//sudoku_delete_space(my_sudoku, percentage);
+	sudoku_transform(my_sudoku); 
+	sudoku_delete_space(my_sudoku, percentage);
 	
 	
 	value = my_sudoku->sudoku_array[cursor];
+	new_value = value;
 	
 	//DRAW!
 	initialize_textures();
@@ -97,10 +98,12 @@ void draw_sudoku() {
 		x += offset; 
 		val = my_sudoku->sudoku_array[i];
 		
-		if (my_sudoku->edit_array[i] == 1) { //draw mutable block
+		if (my_sudoku->edit_array[i]) { //draw mutable block
 			sf2d_draw_texture_part(mut_numbers, x, y, val*25, 0, 25, 25);
+			sf2d_draw_rectangle(230+(row*10), 70+(col*10), 10, 10, RGBA8(0x00, 0x00, 0xFF, 0xFF));
 		} else { //else draw immutable block
 			sf2d_draw_texture_part(immut_numbers, x, y, val*25, 0, 25, 25);
+			//sf2d_draw_rectangle(230+(row*10), 70+(col*10), 10, 10, RGBA8(0xFF, 0xFF, 0xFF, 0xFF));
 		}
 		row++;
 	} 
@@ -127,19 +130,41 @@ int check_input() {
 
 	hidScanInput();
 	u32 kDown = hidKeysDown();
-	if (kDown & KEY_A) value = my_sudoku->sudoku_array[cursor] + 1;
-	if (kDown & KEY_B) value = my_sudoku->sudoku_array[cursor] - 1;
+	if (kDown & KEY_START) abort();
+	if (kDown & KEY_SELECT) abort();
+	if (kDown & KEY_A) new_value = mod(my_sudoku->sudoku_array[cursor]+1, my_sudoku->size+1);
+	else if (kDown & KEY_B) new_value = mod(my_sudoku->sudoku_array[cursor]-1, my_sudoku->size+1);
 		
-	if (kDown & KEY_DOWN) cursor = mod((cursor + SU_SIZE), (SU_SIZE*SU_SIZE));
-	if (kDown & KEY_UP) cursor = mod((cursor - SU_SIZE), (SU_SIZE*SU_SIZE));
-	if (kDown & KEY_LEFT) cursor = mod((cursor - 1), (SU_SIZE*SU_SIZE));
-	if (kDown & KEY_RIGHT) cursor = mod((cursor + 1), (SU_SIZE*SU_SIZE));
+	else if (kDown & KEY_DOWN) cursor = mod((cursor + SU_SIZE), (SU_SIZE*SU_SIZE));
+	else if (kDown & KEY_UP) cursor = mod((cursor - SU_SIZE), (SU_SIZE*SU_SIZE));
+	else if (kDown & KEY_LEFT) cursor = mod((cursor - 1), (SU_SIZE*SU_SIZE));
+	else if (kDown & KEY_RIGHT) cursor = mod((cursor + 1), (SU_SIZE*SU_SIZE));
 		
-	if (kDown & KEY_START) return EXIT;
-	if (kDown & KEY_SELECT) return EXIT;
 	
 	return 1;
 }
+
+void update_game() {	
+	
+	value = my_sudoku->sudoku_array[cursor];
+	new_value = value;
+	check_input();
+	if (new_value != value && my_sudoku->edit_array[cursor] == 1) {
+		my_sudoku->sudoku_array[cursor] = new_value;
+	}
+	
+	draw_frame();
+	
+	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT); //FRAME BEGIN
+	if (check_all(my_sudoku)) {
+		sf2d_draw_rectangle(310, 230, 10, 10, RGBA8(0xFF, 0xFF, 0xFF, 0xFF)); //draw victory box
+	} else {
+		sf2d_draw_rectangle(310, 230, 10, 10, RGBA8(0x00, 0xFF, 0xFF, 0xFF)); //draw defeata
+	}
+	sf2d_end_frame();
+
+}
+
 
 
 
@@ -149,28 +174,21 @@ int main()
 	
 	int flip = 0;
     while (aptMainLoop()) {
-		if (check_input() == EXIT) goto exit;
+
 	
 		flip = 1-flip;
-      
-		draw_frame();
+		update_game();
+		
  
         
  
-        sf2d_start_frame(GFX_BOTTOM, GFX_LEFT);
-		if (flip) {
-				sf2d_draw_rectangle(120, 30, 70, 100, RGBA8(0x00, 0x00, 0xFF, 0xFF));;
-			} else{
-				sf2d_draw_rectangle(150, 70, 100, 100, RGBA8(0xFF, 0xFF, 0xFF, 0xFF));
-			}
-		
-            //Draws a 70x100 blue rectangle (0, 0, 00, 255) at (120, 30)
+      
             
         sf2d_end_frame();
  
         sf2d_swapbuffers();
     }
-	exit: 
+
  
     sf2d_fini();
     return 0;

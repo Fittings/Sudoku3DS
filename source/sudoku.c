@@ -223,6 +223,10 @@ int check_boxes(Sudoku sudoku) {
 	return 1; //Every Box is fine. Pass
 }
 
+int check_all(Sudoku sudoku) {
+	if (check_horizontals(sudoku) && check_verticals(sudoku) && check_boxes(sudoku)) return 1;
+	return 0;
+}
 
 
 

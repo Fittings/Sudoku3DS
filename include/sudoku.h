@@ -29,6 +29,9 @@ extern void sudoku_flip_dia1(Sudoku sudoku);
 extern void sudoku_flip_dia2(Sudoku sudoku);
 
 extern int check_horizontals(Sudoku sudoku);
+extern int check_verticals(Sudoku sudoku);
+extern int check_boxes(Sudoku sudoku);
+extern int check_all(Sudoku sudoku);
 
 
 
