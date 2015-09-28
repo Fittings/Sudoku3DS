@@ -7,6 +7,7 @@
 struct _Sudoku {
 	int size;
 	int *sudoku_array;
+	int *edit_array;
 
 };
 
@@ -17,7 +18,7 @@ extern void sudoku_free(Sudoku sudoku);
 
 extern void sudoku_print(Sudoku sudoku);
 
-extern void sudoku_empty(Sudoku sudoku);
+
 extern void sudoku_default(Sudoku sudoku);
 extern void sudoku_delete_space(Sudoku sudoku, int percentage);
 

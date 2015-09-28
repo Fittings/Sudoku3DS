@@ -14,7 +14,9 @@ Sudoku sudoku_new(int n) {
 	Sudoku my_sudoku = malloc(sizeof *my_sudoku); 
 	my_sudoku->size = n;
 	my_sudoku->sudoku_array = malloc(n * n * sizeof my_sudoku->sudoku_array[0]);
-	//sudoku_empty(my_sudoku);
+	my_sudoku->edit_array = malloc(n * n * sizeof my_sudoku->edit_array[0]);
+	memset(my_sudoku->edit_array, 0, my_sudoku->size * sizeof(int));
+	
 	return my_sudoku;
 }
 
@@ -37,11 +39,7 @@ void sudoku_print(Sudoku sudoku) {
 	}
 	printf("\n");
 }
-//Not really needed when you can use memset? Need to look this up.
-void sudoku_empty(Sudoku sudoku) {
-	int i, size = sudoku->size;
-	for (i=0; i < (size*size); i++) sudoku->sudoku_array[i] = 0;
-}
+
 
 void sudoku_default(Sudoku sudoku) {
 	int i, size=sudoku->size;
@@ -68,6 +66,7 @@ void sudoku_delete_space(Sudoku sudoku, int percentage) {
 	int i;
 	for (i=0; i < array_size; i++) {
 		if (rand() % 101 >= percentage) { 
+			sudoku->edit_array[i] = 1; //Editable spot
 			sudoku->sudoku_array[i] = 0;
 		}
 	}
