@@ -40,12 +40,9 @@ main.o: c:/3ds_dev/Sudoku3DS/source/main.c \
  c:/devkitPro/libctru/include/3ds/gpu/shaderProgram.h \
  c:/devkitPro/libctru/include/3ds/sdmc.h \
  c:/devkitPro/libctru/include/3ds/romfs.h \
+ c:/3ds_dev/Sudoku3DS/include/mylib.h \
  c:/3ds_dev/Sudoku3DS/include/sudoku.h c:/3ds_dev/Sudoku3DS/include/gfx.h \
- c:/devkitPro/libctru/include/sf2d.h c:/devkitPro/libctru/include/sfil.h \
- c:/3ds_dev/Sudoku3DS/include/mylib.h c:/3ds_dev/Sudoku3DS/build/bg_bin.h \
- c:/3ds_dev/Sudoku3DS/build/immut_numbers_bin.h \
- c:/3ds_dev/Sudoku3DS/build/mut_numbers_bin.h \
- c:/3ds_dev/Sudoku3DS/build/selector_bin.h
+ c:/devkitPro/libctru/include/sf2d.h c:/devkitPro/libctru/include/sfil.h
 
 c:/devkitPro/libctru/include/3ds.h:
 
@@ -129,6 +126,8 @@ c:/devkitPro/libctru/include/3ds/sdmc.h:
 
 c:/devkitPro/libctru/include/3ds/romfs.h:
 
+c:/3ds_dev/Sudoku3DS/include/mylib.h:
+
 c:/3ds_dev/Sudoku3DS/include/sudoku.h:
 
 c:/3ds_dev/Sudoku3DS/include/gfx.h:
@@ -136,13 +135,3 @@ c:/3ds_dev/Sudoku3DS/include/gfx.h:
 c:/devkitPro/libctru/include/sf2d.h:
 
 c:/devkitPro/libctru/include/sfil.h:
-
-c:/3ds_dev/Sudoku3DS/include/mylib.h:
-
-c:/3ds_dev/Sudoku3DS/build/bg_bin.h:
-
-c:/3ds_dev/Sudoku3DS/build/immut_numbers_bin.h:
-
-c:/3ds_dev/Sudoku3DS/build/mut_numbers_bin.h:
-
-c:/3ds_dev/Sudoku3DS/build/selector_bin.h:

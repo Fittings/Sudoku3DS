@@ -1,7 +1,7 @@
-#include <string.h> //strcat
-#include <stdio.h> //printf
+//#include <string.h> //strcat
+//#include <stdio.h> //printf
 #include <stdlib.h> //malloc
-#include <math.h> //sqrt
+//#include <math.h> //sqrt
 
 
 #include <unistd.h>
@@ -9,22 +9,19 @@
 #include <errno.h>
 
 #include <3ds.h>
-
+#include "mylib.h" //mod
 
 
 #include "sudoku.h"
-#include "gfx.h"
-#include "mylib.h" //mod
-
-#include <sf2d.h>
-#include <sfil.h>
+#include "gfx.h" 
 
 
-#include "bg_bin.h"
-#include "immut_numbers_bin.h"
-#include "mut_numbers_bin.h"
-#include "selector_bin.h"
+//ZZZ #include <sf2d.h>
+//ZZZ #include <sfil.h>
 
+
+
+//Some globals for easy modifications
 #define SU_SIZE 9
 #define SU_RAND 99
 
@@ -79,7 +76,12 @@ void update_state(SudokuControl s_control) {
 	check_input(s_control);
 	
 	//Update with input
+	if (s_control->new_value != s_control->value && s_control->sudoku->edit_array[s_control->cursor] == 1) {
+		s_control->sudoku->sudoku_array[s_control->cursor] = s_control->new_value;
+	}
+	
 	//Draw state
+	draw(s_control->sudoku_gfx);
 }
 
 /* Initializes all the variables used for tracking. 

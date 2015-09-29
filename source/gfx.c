@@ -7,8 +7,8 @@
 #include <sfil.h>
 
 
-#include "sudoku.h" //ZZZ might not need this
-#include "mylib.h" //mod
+#include "sudoku.h" //Need this to draw a view
+//#include "mylib.h" //mod
 #include "gfx.h"
 
 
@@ -41,12 +41,13 @@ void sudoku_gfx_free(SudokuGFX s_gfx) {
 
 
 //draws everything!
-void draw(Sudoku sudoku) {
+void draw() {
 	sf2d_start_frame(GFX_TOP, GFX_LEFT); //FRAME BEGIN
 	
 	//ZZZ TEST BOX
 	sf2d_draw_rectangle(390, 230, 10, 10, RGBA8(0xFF, 0xFF, 0xFF, 0xFF)); //ZZZdraw victory box
 	
 	sf2d_end_frame(); //FRAME END
+	sf2d_swapbuffers();
 	
 }
