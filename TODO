@@ -16,7 +16,7 @@ Take touch input.
 Handle held-down input
 
 	#CODE FORMATTING
-Need to isolate graphical portion of code out of main
+Consider isolating size from SudokuControl to just Sudoku. (Is this tidier?)
 Clean up the files. Add things to gitignore and all that good stuff!
 Clean up #includes properly
 
@@ -24,8 +24,14 @@ Clean up #includes properly
 Need to properly update once I have finised ver 1
 
 
-	#KNOWN BUGS
+	#OPTIMIZE 
+draw only when change occurs
 
+
+	#BUGS
+Theres some sort of bug where SudokuControl->size isn't correct
+
+	
 
 
 

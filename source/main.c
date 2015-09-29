@@ -15,6 +15,7 @@
 //#include "sudoku.h"
 #include "sudokucontroller.h"
 //#include "gfx.h" 
+#include "sudoku.h" //zzz
 
 
 //ZZZ #include <sf2d.h>
@@ -24,7 +25,7 @@
 
 //Some globals for easy modifications
 #define SU_SIZE 9
-#define SU_RAND 99
+#define SU_RAND 95
 
 
 
@@ -33,7 +34,10 @@
 int main()
 {
 	SudokuControl s_control = initialize_game(SU_SIZE, SU_RAND);
+	
+	
 
+	
     while (aptMainLoop()) { //Program loop
 		update_state(s_control);
 		

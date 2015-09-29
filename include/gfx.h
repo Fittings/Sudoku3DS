@@ -24,7 +24,10 @@ extern SudokuGFX SudokuGFX_init();
 extern void sudoku_gfx_free(SudokuGFX s_gfx);
 extern void draw_victory();
 extern void draw_board();
-extern void draw_bg();
+extern void draw_bg(SudokuControl s_control);
+extern void draw_victory(SudokuControl s_control);
+extern void draw_sudoku(SudokuControl s_control);
+extern void draw_selector(SudokuControl s_control);
 extern void draw(SudokuControl s_control);
 
 //extern void draw(SudokuControl sudoku);

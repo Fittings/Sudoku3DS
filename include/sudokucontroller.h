@@ -9,10 +9,12 @@
 
 struct _SudokuControl {
 	int percentage;
-	int size;
+
 	int cursor;
 	int new_value, value; //ZZZ Might not even need this?
 	int exit_flag;
+	int victory_flag;
+	int flip; //ZZZ
 	//Input Values
 	u32 kDown;  
 	
