@@ -174,6 +174,7 @@ int check_horizontals(Sudoku sudoku) {
 	memset(valid_array, 0, size * sizeof(int)); //init all to 0
 	for (i=0; i < (size * size); i++) {
 		if (i % (size) == 0) memset(valid_array, 0, size * sizeof(int)); //New row, reset valids	
+		if (sudoku->sudoku_array[i] == 0) return 0; //Value is incomplete. Fail
 		if (valid_array[sudoku->sudoku_array[i]-1] == 1) { //value already exists on horizontal. Fail
 			return 0; 
 			}
@@ -191,6 +192,7 @@ int check_verticals(Sudoku sudoku) {
 	for (i=0; i < size; i++) { //i represents the column
 		memset(valid_array, 0, size * sizeof(int));
 		for (j=i+0; j < (size * size); j+=size){ //j is the offset for the column
+			if (sudoku->sudoku_array[j] == 0) return 0; //Value is incomplete. Fail
 			if (valid_array[sudoku->sudoku_array[j]-1] == 1) return 0;  //value already exists on vert. Fail
 			valid_array[sudoku->sudoku_array[j]-1] = 1;
 		} 
@@ -207,6 +209,7 @@ int check_boxes(Sudoku sudoku) {
 	while (i < (size * size)) { //Check i is inbounds
 		for (k=0; k<divisor; k++) { //Inside the box, check the values of all values on the vertical
 			curr_val = sudoku->sudoku_array[i + (k * size)]-1;
+			if (curr_val == -1) return 0; //Value is incomplete. Fail
 			if (valid_array[curr_val] == 1) {
 				return 0; //value already exists in box. Fail
 			}
@@ -230,15 +233,16 @@ int check_all(Sudoku sudoku) {
 
 
 
-//Basic testing code for each function
+//Basic testing code for each function. Define SUDOKU_TEST at compile time to run. (See my test scripts)
 #ifdef SUDOKU_TEST
 int main(void) {
 	Sudoku my_sudoku = sudoku_new(4); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
-	sudoku_print(my_sudoku); //Print
-	printf("\nTransform\n");
-	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
-	my_sudoku->sudoku_array[9] = 1;//ZZZ TESTING
+	//sudoku_print(my_sudoku); //Print
+	//printf("\nTransform\n");
+	//sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
+	my_sudoku->sudoku_array[0] = 0;//ZZZ TESTING
+	//my_sudoku->sudoku_array[1] = 0;//ZZZ TESTING
 	//my_sudoku->sudoku_array[9] = 1;
 	sudoku_print(my_sudoku);
 	

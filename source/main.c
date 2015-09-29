@@ -185,13 +185,7 @@ int main()
 	
 		flip = 1-flip;
 		update_game();
-		
- 
-        
- 
-      
-            
-        
+
  
         sf2d_swapbuffers();
     }

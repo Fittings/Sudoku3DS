@@ -16,10 +16,15 @@ Take touch input
 
 	#CODE FORMATTING
 Need to isolate graphical portion of code out of main
+Clean up the files. Add things to gitignore and all that good stuff!
 
 	#MAKEFILE
 Need to properly update once I have finised ver 1
 
 
 	#KNOWN BUGS
-Theres a bug with checking for victory. Will give victory if the last square is empty and everything else is correct
+
+
+
+
+	
