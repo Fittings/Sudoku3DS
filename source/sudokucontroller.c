@@ -4,13 +4,7 @@
 #include "sudokucontroller.h"
 #include "gfx.h"
 
-//#include <stdlib.h> //malloc
-//#include <unistd.h>
-//#include <stdio.h>
-//#include <errno.h>
 
-
-//#include "mylib.h" //mod
 
 
 //takes keys_down and all that

@@ -10,15 +10,16 @@ Make the cursor loop correctly.
 Spacing
 Interesting background
 Display on bothm screen
+Modify code to use both screens
 
 	#INPUT
 Take touch input.
 Handle held-down input
 
 	#CODE FORMATTING
-Consider isolating size from SudokuControl to just Sudoku. (Is this tidier?)
 Clean up the files. Add things to gitignore and all that good stuff!
 Clean up #includes properly
+gfx has too much control. controller should have more control. Might not fix this.
 
 	#MAKEFILE
 Need to properly update once I have finised ver 1
@@ -29,9 +30,9 @@ draw only when change occurs
 
 
 	#BUGS
-Theres some sort of bug where SudokuControl->size isn't correct
 
 	
+
 
 
 

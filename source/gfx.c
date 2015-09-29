@@ -19,6 +19,12 @@
 #include "mut_numbers_bin.h"
 #include "selector_bin.h"
 
+//Screen resolutions
+#define TOP_W 400
+#define TOP_H 240
+#define BOT_W 320
+#define BOT_H 240
+
 SudokuGFX SudokuGFX_init() {
 	sf2d_init();
 	SudokuGFX my_gfx = malloc(sizeof *my_gfx);
@@ -58,11 +64,15 @@ void draw_victory(SudokuControl s_control) {
 	}
 }
 
+//ZZZ 25 is a magic number, Fix this
 void draw_sudoku(SudokuControl s_control) {
 	int i, size = s_control->sudoku->size;
 	int row=0, col=0, val=0;
-	int x=0, y=0, offset=0;
-	//sf2d_draw_rectangle(0, 230, 10, 10, RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //draw defeat box PURPLE
+	int x=0, y=0, offset = 0;
+	int x_offset = TOP_W/2 - ((size*25)/2); //ZZZ Can these reach 0 if I use a non 25 size? Does it matter?
+	int y_offset = TOP_H/2 - ((size*25)/2);
+
+	
 
 	for (i=0; i < (size*size); i++) {
 		row = i % size;
@@ -70,23 +80,31 @@ void draw_sudoku(SudokuControl s_control) {
 		x = row * 25; y = col * 25; 
 		//if (row % square) x+=5;
 		//if (col % square) y+=5;
-		x += offset; 
+		x += x_offset; y += y_offset;
+		
 		val = s_control->sudoku->sudoku_array[i];
 		
 		if (s_control->sudoku->edit_array[i]) { //draw mutable block
 			sf2d_draw_texture_part(s_control->sudoku_gfx->mut_numbers, x, y, val*25, 0, 25, 25);
-			sf2d_draw_rectangle(230+(row*10), 70+(col*10), 10, 10, RGBA8(0x00, 0x00, 0xFF, 0xFF));
 		} else { //else draw immutable block
 			sf2d_draw_texture_part(s_control->sudoku_gfx->immut_numbers, x, y, val*25, 0, 25, 25);
-			sf2d_draw_rectangle(230+(row*10), 70+(col*10), 10, 10, RGBA8(0xFF, 0xFF, 0xFF, 0xFF));
 		}
 		row++;
 	} 
+	
+	sf2d_draw_line(x_offset, y_offset, x_offset+(size*25), y_offset, RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //TOP_HOR LINE
+	sf2d_draw_line(x_offset, y_offset+(size*25), x_offset+(size*25), y_offset+(size*25), RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //BOT_HOR LINE
+	sf2d_draw_line(x_offset, y_offset, x_offset, y_offset+(size*25), RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //LEFT_VERT LINE
+	sf2d_draw_line(x_offset+(size*25), y_offset, x_offset+(size*25), y_offset+(size*25), RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //RIGHT_VERT LINE
 }
 
 void draw_selector(SudokuControl s_control) {
 	int size = s_control->sudoku->size;
-	sf2d_draw_texture(s_control->sudoku_gfx->selector, s_control->cursor%size * 25, s_control->cursor/size * 25);
+	
+	int x_offset = TOP_W/2 - ((size*25)/2); //ZZZ Can these reach 0 if I use a non 25 size? Does it matter?
+	int y_offset = TOP_H/2 - ((size*25)/2);
+	
+	sf2d_draw_texture(s_control->sudoku_gfx->selector, s_control->cursor%size * 25 +x_offset , s_control->cursor/size * 25 +y_offset);
 }
 
 
