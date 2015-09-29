@@ -161,9 +161,9 @@ void update_game() {
 	draw_frame();
 	
 	
-	sf2d_start_frame(GFX_BOTTOM, GFX_LEFT); //FRAME BEGIN
 	
-	sf2d_end_frame(); 
+	
+	
 
 }
 
@@ -185,7 +185,13 @@ int main()
 	
 		flip = 1-flip;
 		update_game();
-
+		
+ 
+        
+ 
+      
+            
+        
  
         sf2d_swapbuffers();
     }

@@ -236,12 +236,12 @@ int check_all(Sudoku sudoku) {
 //Basic testing code for each function. Define SUDOKU_TEST at compile time to run. (See my test scripts)
 #ifdef SUDOKU_TEST
 int main(void) {
-	Sudoku my_sudoku = sudoku_new(4); //Create
+	Sudoku my_sudoku = sudoku_new(9); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	//sudoku_print(my_sudoku); //Print
-	//printf("\nTransform\n");
+	printf("\nTransform\n");
 	//sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
-	my_sudoku->sudoku_array[0] = 0;//ZZZ TESTING
+	//my_sudoku->sudoku_array[0] = 0;//ZZZ TESTING
 	//my_sudoku->sudoku_array[1] = 0;//ZZZ TESTING
 	//my_sudoku->sudoku_array[9] = 1;
 	sudoku_print(my_sudoku);
