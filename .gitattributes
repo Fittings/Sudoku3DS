@@ -1,7 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-*.rb linguist-language=C
+Makefile linguist-language=C
 
 # Custom for Visual Studio
 *.cs     diff=csharp
