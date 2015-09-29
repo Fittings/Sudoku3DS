@@ -41,7 +41,7 @@ void sudoku_gfx_free(SudokuGFX s_gfx) {
 
 
 //draws everything!
-void draw() {
+void draw(Sudoku sudoku) {
 	sf2d_start_frame(GFX_TOP, GFX_LEFT); //FRAME BEGIN
 	
 	//ZZZ TEST BOX

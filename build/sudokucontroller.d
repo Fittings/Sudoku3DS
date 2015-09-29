@@ -1,4 +1,4 @@
-main.o: c:/3ds_dev/Sudoku3DS/source/main.c \
+sudokucontroller.o: c:/3ds_dev/Sudoku3DS/source/sudokucontroller.c \
  c:/devkitPro/libctru/include/3ds.h \
  c:/devkitPro/libctru/include/3ds/types.h \
  c:/devkitPro/libctru/include/3ds/svc.h \
