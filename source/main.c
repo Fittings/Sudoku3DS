@@ -12,9 +12,9 @@
 #include "mylib.h" //mod
 
 
-#include "sudoku.h"
+//#include "sudoku.h"
 #include "sudokucontroller.h"
-#include "gfx.h" 
+//#include "gfx.h" 
 
 
 //ZZZ #include <sf2d.h>
@@ -34,15 +34,14 @@ int main()
 {
 	SudokuControl s_control = initialize_game(SU_SIZE, SU_RAND);
 
-    while (aptMainLoop()) {
+    while (aptMainLoop()) { //Program loop
 		update_state(s_control);
 		
-        //sf2d_swapbuffers();  //ZZZ Probably need this somewhere in gfx
 		if (s_control->exit_flag) break;
     }
-
- 
-    sf2d_fini();
+	
+	sudoku_control_free(s_control);
+    
     return 0;
 }
 

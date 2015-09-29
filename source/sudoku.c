@@ -1,9 +1,3 @@
-#include <stdlib.h> //malloc, rand
-#include <string.h> //memset
-#include <stdio.h> //printf
-#include <time.h> //time
-#include <math.h> //sqrt
-#include "mylib.h" //rand
 #include "sudoku.h"
 
 
@@ -11,19 +5,29 @@
 
 //Creates an empty representation of Sudoku of size n
 Sudoku sudoku_new(int n) {
-	Sudoku my_sudoku = malloc(sizeof *my_sudoku); 
+	Sudoku my_sudoku = malloc(sizeof *my_sudoku);
+	if (my_sudoku == NULL) { //Safety
+		free(my_sudoku);
+		return NULL;
+	}
 	my_sudoku->size = n;
 	my_sudoku->sudoku_array = malloc(n * n * sizeof my_sudoku->sudoku_array[0]);
 	my_sudoku->edit_array = malloc(n * n * sizeof my_sudoku->edit_array[0]);
+	if (my_sudoku->sudoku_array == NULL || my_sudoku->edit_array == NULL) { //Safety
+		return NULL;
+	}
 	memset(my_sudoku->edit_array, 0, my_sudoku->size * sizeof(int));
-	
 	return my_sudoku;
 }
 
 
+//Frees sudoku
 void sudoku_free(Sudoku sudoku) {
-	free(sudoku->sudoku_array);
-	sudoku->sudoku_array = 0; //optional
+	if (sudoku == NULL) {  //Safety
+		free(sudoku->sudoku_array);
+		sudoku->sudoku_array = 0; //optional
+		free(sudoku);
+	}
 }
 
 

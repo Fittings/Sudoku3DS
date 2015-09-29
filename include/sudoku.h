@@ -1,6 +1,13 @@
 #ifndef SUDOKU_H_
 #define SUDOKU_H_
 
+#include <stdlib.h> //malloc, rand
+#include <string.h> //memset
+#include <stdio.h> //printf
+#include <time.h> //time
+#include <math.h> //sqrt
+#include "mylib.h" //rand
+
 
 
 //Structure for a unknown NxN sized array. Where N = size
