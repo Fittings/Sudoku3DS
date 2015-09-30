@@ -61,10 +61,32 @@ void update_state(SudokuControl s_control) {
 	update_sudoku_input(s_control);
 	update_victory_state(s_control);
 	
+	int size = s_control->sudoku->size; //To shorten function calls
+	int x_offset = TOP_W/2 - ((size*TILE_SIZE)/2); //ZZZ Can these reach 0 if I use a non TILE_SIZE size? Does it matter?
+	int y_offset = TOP_H/2 - ((size*TILE_SIZE)/2);
 	
+	//DRAW STATE TOP
+	start_draw(s_control->sudoku_gfx, GFX_TOP); 
+		draw_background(s_control->sudoku_gfx); //Draw background!
+		draw_victory(s_control->victory_flag); //Draw victory!
+		draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset);
+		draw_selector(s_control->sudoku_gfx, s_control->cursor, size, x_offset, y_offset);
+	end_draw(); 
+	//END TOP
 	
-	//Draw state
-	draw(s_control);
+	x_offset = BOTTOM_W/2 - ((size*TILE_SIZE)/2); //ZZZ Can these reach 0 if I use a non TILE_SIZE size? Does it matter?
+	y_offset = BOTTOM_H/2 - ((size*TILE_SIZE)/2);
+	
+	//DRAW STATE BOTTOM
+	start_draw(s_control->sudoku_gfx, GFX_BOTTOM); 
+		//Draw sudoku
+		draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset);
+		//Draw selector
+		draw_selector(s_control->sudoku_gfx, s_control->cursor, size, x_offset, y_offset);
+	end_draw(); 
+	end();
+	//END BOTTOM	
+	
 } 
 
 /* Initializes all the variables used for tracking. 

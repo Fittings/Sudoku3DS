@@ -44,8 +44,7 @@ sudokucontroller.o: c:/3ds_dev/Sudoku3DS/source/sudokucontroller.c \
  c:/devkitPro/libctru/include/3ds/sdmc.h \
  c:/devkitPro/libctru/include/3ds/romfs.h \
  c:/3ds_dev/Sudoku3DS/include/gfx.h c:/devkitPro/libctru/include/sf2d.h \
- c:/devkitPro/libctru/include/sfil.h \
- c:/3ds_dev/Sudoku3DS/include/sudokucontroller.h
+ c:/devkitPro/libctru/include/sfil.h
 
 c:/3ds_dev/Sudoku3DS/include/sudoku.h:
 
@@ -140,5 +139,3 @@ c:/3ds_dev/Sudoku3DS/include/gfx.h:
 c:/devkitPro/libctru/include/sf2d.h:
 
 c:/devkitPro/libctru/include/sfil.h:
-
-c:/3ds_dev/Sudoku3DS/include/sudokucontroller.h:

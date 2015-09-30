@@ -44,7 +44,6 @@ gfx.o: c:/3ds_dev/Sudoku3DS/source/gfx.c \
  c:/3ds_dev/Sudoku3DS/include/mylib.h \
  c:/3ds_dev/Sudoku3DS/include/mylib.h c:/3ds_dev/Sudoku3DS/include/gfx.h \
  c:/devkitPro/libctru/include/sf2d.h c:/devkitPro/libctru/include/sfil.h \
- c:/3ds_dev/Sudoku3DS/include/sudokucontroller.h \
  c:/3ds_dev/Sudoku3DS/build/bg_bin.h \
  c:/3ds_dev/Sudoku3DS/build/immut_numbers_bin.h \
  c:/3ds_dev/Sudoku3DS/build/mut_numbers_bin.h \
@@ -143,8 +142,6 @@ c:/3ds_dev/Sudoku3DS/include/gfx.h:
 c:/devkitPro/libctru/include/sf2d.h:
 
 c:/devkitPro/libctru/include/sfil.h:
-
-c:/3ds_dev/Sudoku3DS/include/sudokucontroller.h:
 
 c:/3ds_dev/Sudoku3DS/build/bg_bin.h:
 
