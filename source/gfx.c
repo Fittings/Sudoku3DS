@@ -11,7 +11,9 @@
 #include "mylib.h" //mod
 #include "gfx.h"
 
-
+#define BG_COL 40 //Need to remove these magic numbers and actually do the maths on this.
+#define BG_ROW 75
+#define BOX_SIZE 5
 
 
 //Load Images
@@ -32,6 +34,11 @@ SudokuGFX SudokuGFX_init() {
 	my_gfx->flip = 0;
 	my_gfx->top_frame = 0;
 	my_gfx->bottom_frame = 0;
+	my_gfx->first_bg_array = malloc(BG_ROW * sizeof my_gfx->first_bg_array[0]);
+	my_gfx->second_bg_array = malloc(BG_ROW * sizeof my_gfx->second_bg_array[0]);
+	init_background(my_gfx);
+	//init_background(my_gfx);
+	
 	//Load all images
 	my_gfx->bg 				= sfil_load_PNG_buffer(bg_bin, SF2D_PLACE_RAM);
 	my_gfx->immut_numbers 	= sfil_load_PNG_buffer(immut_numbers_bin, SF2D_PLACE_RAM);
@@ -45,60 +52,75 @@ SudokuGFX SudokuGFX_init() {
 void sudoku_gfx_free(SudokuGFX s_gfx) {
 	sf2d_fini();
 	if (s_gfx != NULL) {
+		free(s_gfx->first_bg_array);
 		free(s_gfx);
 	}
 }
 
-//Handles background drawing 
-void draw_background(SudokuGFX s_gfx, gfxScreen_t screen) {
-	
-	if (screen == GFX_TOP) {
-
-		int mini_box_sz = 5, i, j, x=0, y=0, y_offset = 0, x_offset = 0;
-		sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
-		
-		//sf2d_draw_rectangle(0, 2, TOP_W, TOP_H/7, RGBA8(0xE9, 0x6E, 0x9C, 0xbE)); //draw status bar
-		for (j=0; j < 40 ; j++) {			
-			y = j + y_offset + 1;
-			
-			for (i=0; i < 64 ; i++) {
-				x = i;
-				x = (i + s_gfx->top_frame + x_offset) % (TOP_W+50);
-				x -= (50);
-				if (j % 2) {
-					//x = 64 - x;
-				} 
-				
-				
-				
-				if (i%2 == 0) { //RGBA8(0xF4, 0xE1, 0xE5, 0xbE)
-					sf2d_draw_rectangle(x, y, mini_box_sz, mini_box_sz, RGBA8(0xE9, 0x6E, 0x9C, 0xbE));
-				} else {
-					sf2d_draw_rectangle(x, y, mini_box_sz, mini_box_sz, RGBA8(0xFA, 0xDC, 0xE4, 0xbE));
-				}
-				
-		
-				x_offset += 6;
-				
-				
-			}
-			
-			x_offset = 0;
-			y_offset += 6;
-			
-			
-
-			
-			
-		}
-		
-		//sf2d_draw_rectangle(398, 30, mini_box_sz, mini_box_sz, RGBA8(0xE9, 0x6E, 0x9C, 0xbE));
-		
-		
-	} else {
-		sf2d_draw_texture(s_gfx->bg, 0, 0);
+void init_background(SudokuGFX s_gfx) {
+	int i;
+	for (i=0; i < BG_ROW; i++) {
+		s_gfx->first_bg_array[i]=i*(BOX_SIZE+1) - 24; //array storing x position of boxes
+		s_gfx->second_bg_array[i]=i*(BOX_SIZE+1) - 24;
 	}
 }
+
+void update_background_position(SudokuGFX s_gfx) {
+	int i;
+	for (i=0; i < BG_ROW; i++) {
+		s_gfx->first_bg_array[i] = mod(s_gfx->first_bg_array[i]+1, TOP_W + 50 ) - 50;
+		s_gfx->second_bg_array[i] = mod(s_gfx->second_bg_array[i]-1, TOP_W + 50 ) - 50;
+		
+	}
+}
+
+
+
+
+void draw_top_background(SudokuGFX s_gfx) {
+	if (s_gfx->top_frame % 2 == 0) {
+		update_background_position(s_gfx);
+
+	}
+		
+	int i, j, x, y;
+	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
+	//sf2d_draw_rectangle(0, 0, BOX_SIZE, BOX_SIZE, RGBA8(0xF4, 0xE1, 0xE5, 0xbE));
+	for (i=0; i < TOP_H + 20; i+=6) {
+		//
+		y = i;
+		
+		for (j=0; j < BG_ROW; j++) {
+		
+			if (i % 2 == 0) { //if a second row
+				x = s_gfx->first_bg_array[j];
+			} else { //if a first row
+				x = s_gfx->second_bg_array[j];
+			}
+			
+			
+			
+			
+			if (j % 2 == 0) { 
+				sf2d_draw_rectangle(x, y, BOX_SIZE, BOX_SIZE, RGBA8(0xF4, 0xE1, 0xE5, 0xFF));
+			} else {
+				
+				sf2d_draw_rectangle(x, y, BOX_SIZE, BOX_SIZE, RGBA8(0xFA, 0xDC, 0xE4, 0xFF));
+			}
+			
+		} 
+	}
+	if (s_gfx->second_bg_array[0] != s_gfx->first_bg_array[0] ){
+		sf2d_draw_rectangle(0, 2, TOP_W, 32, RGBA8(0xE9, 0x6E, 0x9C, 0xFF)); //draw status bar
+		}
+}
+
+extern void draw_bottom_background(SudokuGFX s_gfx) {
+	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
+}
+
+
+
 
 //Handles victory drawing
 void draw_victory(int victory_flag) {
@@ -111,7 +133,7 @@ void draw_victory(int victory_flag) {
 
 //ZZZ TILE_SIZE is a magic number, Fix this
 //Needs to know, (size, s_gfx, sudoku_array, edit_array 
-void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, int x_offset, int y_offset) {
+void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, int x_offset, int y_offset, int cursor) {
 	int i, square = sqrt(size);
 	int row=0, col=0, val=0;
 	int x=0, y=0;// offset = 0;
@@ -142,6 +164,9 @@ void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, 
 		} else { //else draw immutable block
 			sf2d_draw_texture_part(s_gfx->immut_numbers, x, y, val*TILE_SIZE, 0, TILE_SIZE, TILE_SIZE);
 		}
+		if (row == (cursor%size) && col == (cursor/size)) {//draw selector
+			sf2d_draw_texture(s_gfx->selector, x, y);
+		}
 		row++;
 	} 
 	//x_offset += (sqrt(size)-1)*5;
@@ -153,9 +178,11 @@ void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, 
 	//sf2d_draw_line(x_offset+(puzzle_width), y_offset, x_offset+(puzzle_width), y_offset+(puzzle_width), RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //RIGHT_VERT LINE
 }
 
+#ifdef HELLO
 void draw_selector(SudokuGFX s_gfx, int cursor, int size, int x_offset, int y_offset) {
 	sf2d_draw_texture(s_gfx->selector, cursor%size * TILE_SIZE +x_offset , cursor/size * TILE_SIZE +y_offset);
 }
+#endif
 
 
 

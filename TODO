@@ -17,6 +17,7 @@ Handle held-down input
 	#CODE FORMATTING
 Clean up the files. Add things to gitignore and all that good stuff!
 Clean up #includes properly
+Re-logic all magic numbers.
 
 
 	#MAKEFILE
@@ -24,7 +25,10 @@ Need to properly update once I have finised ver 1
 
 
 	#OPTIMIZE 
-draw only when change occurs
+draw only when change occurs //Only start frame when needed
+
+	#REWORK
+Background drawing. This is currently too fast.
 
 
 	#BUGS

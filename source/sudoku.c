@@ -23,7 +23,7 @@ Sudoku sudoku_new(int n) {
 
 //Frees sudoku
 void sudoku_free(Sudoku sudoku) {
-	if (sudoku == NULL) {  //Safety
+	if (sudoku != NULL) {  //Safety
 		free(sudoku->sudoku_array);
 		sudoku->sudoku_array = 0; //optional
 		free(sudoku);

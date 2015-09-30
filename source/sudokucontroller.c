@@ -66,8 +66,9 @@ void update_state(SudokuControl s_control) {
 	int y_offset = TOP_H/2 - ((size*TILE_SIZE)/2);
 	//DRAW STATE TOP
 	start_draw(s_control->sudoku_gfx, GFX_TOP); 
-		draw_background(s_control->sudoku_gfx, GFX_TOP); //Draw background!
-		draw_victory(s_control->victory_flag); //Draw victory!
+		draw_top_background(s_control->sudoku_gfx); //Draw background!
+		//draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset);
+		//draw_selector(s_control->sudoku_gfx, s_control->cursor, size, x_offset, y_offset);
 	end_draw(); 
 	//END TOP
 	
@@ -76,11 +77,12 @@ void update_state(SudokuControl s_control) {
 	
 	//DRAW STATE BOTTOM
 	start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
-		draw_background(s_control->sudoku_gfx, GFX_BOTTOM);
+		draw_bottom_background(s_control->sudoku_gfx);
 		//Draw sudoku
-		draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset);
+		draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset, s_control->cursor);
 		//Draw selector
-		draw_selector(s_control->sudoku_gfx, s_control->cursor, size, x_offset, y_offset);
+		//draw_selector(s_control->sudoku_gfx, s_control->cursor, size, x_offset, y_offset);
+		draw_victory(s_control->victory_flag); //Draw victory!
 	end_draw(); 
 	end();
 	//END BOTTOM	

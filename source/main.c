@@ -40,9 +40,8 @@ int main()
 	
     while (aptMainLoop()) { //Program loop
 		update_state(s_control);
-		
 		if (s_control->exit_flag) break;
-    }
+	}
 	
 	sudoku_control_free(s_control);
     
