@@ -31,6 +31,8 @@ extern void sudoku_gfx_free(SudokuGFX s_gfx);
 extern void init_background(SudokuGFX s_gfx);
 extern void update_background_position(SudokuGFX s_gfx);
 
+extern void draw_many_boxes(SudokuGFX s_gfx);
+
 extern void draw_board();
 extern void draw_top_background(SudokuGFX s_gfx);
 extern void draw_bottom_background(SudokuGFX s_gfx);

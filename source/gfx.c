@@ -65,6 +65,7 @@ void init_background(SudokuGFX s_gfx) {
 	}
 }
 
+//ZZZ second_bg_array is doing absolutely nothing. This needs to fixed or removed
 void update_background_position(SudokuGFX s_gfx) {
 	int i;
 	for (i=0; i < BG_ROW; i++) {
@@ -74,45 +75,34 @@ void update_background_position(SudokuGFX s_gfx) {
 	}
 }
 
-
-
-
-void draw_top_background(SudokuGFX s_gfx) {
-	if (s_gfx->top_frame % 2 == 0) {
-		update_background_position(s_gfx);
-
-	}
-		
+//Draws the scrolling boxes on the screen. 
+void draw_many_boxes(SudokuGFX s_gfx) {
+	if (s_gfx->top_frame % 2 == 0) update_background_position(s_gfx);
 	int i, j, x, y;
-	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
-	//sf2d_draw_rectangle(0, 0, BOX_SIZE, BOX_SIZE, RGBA8(0xF4, 0xE1, 0xE5, 0xbE));
+	
 	for (i=0; i < TOP_H + 20; i+=6) {
-		//
 		y = i;
-		
 		for (j=0; j < BG_ROW; j++) {
-		
-			if (i % 2 == 0) { //if a second row
+			if (i % 2 == 0) { //if a second row //ZZZ This is not working propery. Probably remove this
 				x = s_gfx->first_bg_array[j];
 			} else { //if a first row
 				x = s_gfx->second_bg_array[j];
 			}
-			
-			
-			
-			
 			if (j % 2 == 0) { 
 				sf2d_draw_rectangle(x, y, BOX_SIZE, BOX_SIZE, RGBA8(0xF4, 0xE1, 0xE5, 0xFF));
 			} else {
-				
 				sf2d_draw_rectangle(x, y, BOX_SIZE, BOX_SIZE, RGBA8(0xFA, 0xDC, 0xE4, 0xFF));
 			}
-			
 		} 
 	}
-	if (s_gfx->second_bg_array[0] != s_gfx->first_bg_array[0] ){
-		sf2d_draw_rectangle(0, 2, TOP_W, 32, RGBA8(0xE9, 0x6E, 0x9C, 0xFF)); //draw status bar
-		}
+}
+
+
+void draw_top_background(SudokuGFX s_gfx) {
+	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
+	draw_many_boxes(s_gfx);
+	sf2d_draw_rectangle(0, 2, TOP_W, 32, RGBA8(0xE9, 0x6E, 0x9C, 0xFF)); //draw status bar
+
 }
 
 extern void draw_bottom_background(SudokuGFX s_gfx) {
@@ -140,10 +130,6 @@ void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, 
 	//int puzzle_width = size*TILE_SIZE;
 	int x_div_offset = 0;
 	int y_div_offset = 0;
-	
-	//
-	
-	
 
 	for (i=0; i < (size*size); i++) {
 		row = i % size;
@@ -169,23 +155,7 @@ void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, 
 		}
 		row++;
 	} 
-	//x_offset += (sqrt(size)-1)*5;
-	//y_offset += (sqrt(size)-1)*5;
-	
-	//sf2d_draw_line(x_offset, y_offset, x_offset+(puzzle_width), y_offset, RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //TOP_HOR LINE
-	//sf2d_draw_line(x_offset, y_offset+(puzzle_width), x_offset+(puzzle_width), y_offset+(puzzle_width), RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //BOT_HOR LINE
-	//sf2d_draw_line(x_offset, y_offset, x_offset, y_offset+(puzzle_width), RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //LEFT_VERT LINE
-	//sf2d_draw_line(x_offset+(puzzle_width), y_offset, x_offset+(puzzle_width), y_offset+(puzzle_width), RGBA8(0xFF, 0x00, 0xFF, 0xFF)); //RIGHT_VERT LINE
 }
-
-#ifdef HELLO
-void draw_selector(SudokuGFX s_gfx, int cursor, int size, int x_offset, int y_offset) {
-	sf2d_draw_texture(s_gfx->selector, cursor%size * TILE_SIZE +x_offset , cursor/size * TILE_SIZE +y_offset);
-}
-#endif
-
-
-
 
 
 //This should be called paired with end_draw()
