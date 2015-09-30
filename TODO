@@ -7,10 +7,8 @@ Port over my solver from java. Need to include a bunch of methods
 
 	#VISUAL
 Make the cursor loop correctly. 
-Spacing
-Interesting background
-Display on bothm screen
-Modify code to use both screens
+]
+Interesting background - TOO INTERESTING
 
 	#INPUT
 Take touch input.
@@ -19,7 +17,7 @@ Handle held-down input
 	#CODE FORMATTING
 Clean up the files. Add things to gitignore and all that good stuff!
 Clean up #includes properly
-gfx has too much control. controller should have more control. Might not fix this.
+
 
 	#MAKEFILE
 Need to properly update once I have finised ver 1
