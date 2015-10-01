@@ -1,7 +1,3 @@
-	#INCR DIVERSITY
-Swap an entire row/column as long as in same box. 
-Swap an entire rows/columns of 1 box with another box. 
-
 	#PORT SOLVER
 Port over my solver from java. Need to include a bunch of methods
 
@@ -31,7 +27,7 @@ draw only when change occurs //Only start frame when needed
 
 	#REWORK
 Background doesn't draw correctly. Currently its doing work on arrays that are useless.
-
+	*-> Just make it a single texture and keep doing what Im doing
 
 	#BUGS
 

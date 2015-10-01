@@ -31,6 +31,11 @@ extern void sudoku_delete_space(Sudoku sudoku, int percentage);
 
 extern void sudoku_transform(Sudoku sudoku);
 extern void sudoku_flip_box_rows(Sudoku sudoku);
+extern void sudoku_flip_box_cols(Sudoku sudoku);
+extern void sudoku_flip_rowbox(Sudoku sudoku);
+extern void sudoku_flip_colbox(Sudoku sudoku);
+extern void sudoku_swap_brow(Sudoku sudoku, int brow1, int brow2);
+extern void sudoku_swap_bcol(Sudoku sudoku, int bcol1, int bcol2);
 extern void sudoku_swap_row(Sudoku sudoku, int row1, int row2);
 extern void sudoku_swap_col(Sudoku sudoku, int row1, int row2);
 extern void sudoku_flip_vert(Sudoku sudoku);

@@ -87,7 +87,7 @@ void sudoku_transform(Sudoku sudoku) {
 	int i = 0;
 	while (i < 5000) { //Magic number, I know...
 		i++;
-		int val = rand_lim(100);
+		int val = rand_lim(150);
 		if (0  <= val && val <  25) {
 			sudoku_flip_vert(sudoku);
 		} else if (25 <= val && val <  50) {
@@ -98,6 +98,14 @@ void sudoku_transform(Sudoku sudoku) {
 		}
 		else if (75 <= val && val < 100) {
 			sudoku_flip_dia2(sudoku);
+		} else if (100 <= 125) {
+			sudoku_flip_box_rows(sudoku);
+		} else if (125 < 150) {
+			sudoku_flip_box_rows(sudoku);
+		} else if (150 < 175) {
+			sudoku_flip_rowbox(sudoku);
+		} else if (175 < 200) {
+			sudoku_flip_colbox(sudoku);
 		}
 		
 	}
@@ -111,29 +119,104 @@ void sudoku_flip_box_rows(Sudoku sudoku) {
 	int old_div=0, new_div=div_size;
 	for (i=0; i < (size*size); i+=size) {
 		row = i/size;
-		printf("row: %i\n", row);
-		
-		//printf("rand: %i\n", rand_lim(100));
-		while (80 > rand_lim(100)) { //Keep swapping with 70% chance
+		while (80 > rand_lim(100)) { //Keep swapping with 80% chance
 			int row1 = old_div + rand_lim(div_size-1); 
 			int row2 = old_div + rand_lim(div_size-1);
 			sudoku_swap_row(sudoku, row1, row2);
 		}
 		
 		if ((row % (div_size) == 0) && (row != 0)) { //Entered a new box. Re-set boundaries.
-			
 			old_div = new_div;
 			new_div += div_size;
-			printf("Upda on row: %i, with old: %i new: %i \n", row+1, old_div, new_div);
+		}
+	}	
+}
+//Swaps columns randomly within a box
+void sudoku_flip_box_cols(Sudoku sudoku) {
+	int i, col,  size = sudoku->size, div_size=sqrt(size);
+	int old_div=0, new_div=div_size;
+	for (i=0; i < size; i++) {
+		col = i % size;
+		while (80 > rand_lim(100)) { //Keep swapping with 70% chance
+			int col1 = old_div + rand_lim(div_size-1); 
+			int col2 = old_div + rand_lim(div_size-1);
+			sudoku_swap_col(sudoku, col1, col2);
 		}
 		
-	}	
-
+		if ((col % (div_size) == 0) && (col != 0)) { //Entered a new box. Re-set boundaries.
+			old_div = new_div;
+			new_div += div_size;
+		}
+	}
 }
 
+
+
+
+//Randomly swaps a row of boxes.
+void sudoku_flip_rowbox(Sudoku sudoku) {
+	int i = 0, div_size = sqrt(sudoku->size);
+	for (i=0; i < div_size; i++) {
+		while (80 > rand_lim(100)) {
+			int brow1 = rand_lim(div_size-1);
+			int brow2 = rand_lim(div_size-1);
+			sudoku_swap_brow(sudoku, brow1, brow2);
+		}
+	}
+}
+
+//Randomly swaps a column of boxes				//ZZZThis could easily be combined into one function with a toggle parameter.
+void sudoku_flip_colbox(Sudoku sudoku) {
+	int i = 0, div_size = sqrt(sudoku->size);
+	for (i=0; i < div_size; i++) {
+		while (80 > rand_lim(100)) {
+			int bcol1 = rand_lim(div_size-1);
+			int bcol2 = rand_lim(div_size-1);
+			sudoku_swap_bcol(sudoku, bcol1, bcol2);
+		}
+	}
+}
+
+//This swaps the rows of box1 with the rows of box2.
+void sudoku_swap_brow(Sudoku sudoku, int brow1, int brow2) {
+	int size = sudoku->size, div_size = sqrt(size);
+	int i = brow1 * (div_size * size); int j = brow2 * (div_size * size);
+	if (brow1 == brow2) return;
+	int difference = j-i;
+	int max = i + (div_size*size);
+	//ZZZprintf("diff %i, max: %i\n", difference, max);
+	for (i=i; i < max; i++) {
+		int temp = sudoku->sudoku_array[i];
+		//ZZZprintf("swapping %i and %i\n", i, i+difference);
+		sudoku->sudoku_array[i] = sudoku->sudoku_array[i+difference];
+		sudoku->sudoku_array[i+difference] = temp;
+	}
+}
+
+//This swaps the columns of box1 with the columns of box2
+void sudoku_swap_bcol(Sudoku sudoku, int bcol1, int bcol2) {
+	if (bcol1 == bcol2) return; 
+	int i, size = sudoku->size, div_size = sqrt(size);
+	if (bcol1 >= sqrt(size) || bcol2 >= sqrt(size)) return;
+	int col1 = bcol1 * div_size, col2 = bcol2 * div_size;
+	int difference = col2-col1;
+	int temp, offset=0;
+	for (offset=0; offset < div_size; offset++) {
+		for (i=col1; i < (size*size); i+=size) {
+			temp = sudoku->sudoku_array[i+offset];
+			sudoku->sudoku_array[i+offset] = sudoku->sudoku_array[i+difference+offset];
+			sudoku->sudoku_array[i+difference+offset] = temp;
+		}
+	}
+	
+}
+
+
+
+	
 //This swaps rows. Intended to be used for the row flipping function.
 void sudoku_swap_row(Sudoku sudoku, int row1, int row2) {
-	//	if (row1 == row2) return;
+	if (row1 == row2) return;
 	int i = row1 * sudoku->size, j = row2 * sudoku->size;
 	int difference = j-i;
 	int temp;
@@ -145,8 +228,13 @@ void sudoku_swap_row(Sudoku sudoku, int row1, int row2) {
 	}
 }
 
+
+
+
+
 //this swaps columns. Intended to be used for the column flipping function.
 void sudoku_swap_col(Sudoku sudoku, int col1, int col2) {
+	if (col1 == col2) return; 
 	int i, size = sudoku->size; 
 	int difference = col2-col1;
 	int temp;
@@ -307,8 +395,9 @@ int main(void) {
 	//sudoku_print(my_sudoku); //Print
 	sudoku_print(my_sudoku);
 	printf("\nTransform\n");
-	sudoku_flip_box_rows(my_sudoku);
-	//sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
+	//sudoku_swap_brow(my_sudoku, 2, 1);
+	//sudoku_flip_colbox(my_sudoku);
+	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
 	//my_sudoku->sudoku_array[0] = 0;//ZZZ TESTING
 	//my_sudoku->sudoku_array[1] = 0;//ZZZ TESTING
 	//my_sudoku->sudoku_array[9] = 1;
