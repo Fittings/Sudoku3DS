@@ -18,6 +18,7 @@ Handle held-down input
 Clean up the files. Add things to gitignore and all that good stuff!
 Clean up #includes properly
 Re-logic all magic numbers.
+Seperate GFX into dedicated files.
 
 
 	#MAKEFILE

@@ -72,8 +72,8 @@ void update_state(SudokuControl s_control) {
 	end_draw(); 
 	//END TOP
 	
-	x_offset = BOTTOM_W/2 - ((size*TILE_SIZE)/2); //ZZZ Can these reach 0 if I use a non TILE_SIZE size? Does it matter?
-	y_offset = BOTTOM_H/2 - ((size*TILE_SIZE)/2);
+	x_offset = BOTTOM_W/2 - ((size*TILE_SIZE)/2) - (2 * 2); //ZZZ Can these reach 0 if I use a non TILE_SIZE size? Does it matter?
+	y_offset =2 + BOTTOM_H/2 - ((size*TILE_SIZE)/2) - (2 * 2);
 	
 	//DRAW STATE BOTTOM
 	start_draw(s_control->sudoku_gfx, GFX_BOTTOM);

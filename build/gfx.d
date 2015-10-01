@@ -47,7 +47,9 @@ gfx.o: c:/3ds_dev/Sudoku3DS/source/gfx.c \
  c:/3ds_dev/Sudoku3DS/build/bg_bin.h \
  c:/3ds_dev/Sudoku3DS/build/immut_numbers_bin.h \
  c:/3ds_dev/Sudoku3DS/build/mut_numbers_bin.h \
- c:/3ds_dev/Sudoku3DS/build/selector_bin.h
+ c:/3ds_dev/Sudoku3DS/build/selector_bin.h \
+ c:/3ds_dev/Sudoku3DS/build/icon_bin.h \
+ c:/3ds_dev/Sudoku3DS/build/sudoku3ds_bin.h
 
 c:/devkitPro/libctru/include/3ds.h:
 
@@ -150,3 +152,7 @@ c:/3ds_dev/Sudoku3DS/build/immut_numbers_bin.h:
 c:/3ds_dev/Sudoku3DS/build/mut_numbers_bin.h:
 
 c:/3ds_dev/Sudoku3DS/build/selector_bin.h:
+
+c:/3ds_dev/Sudoku3DS/build/icon_bin.h:
+
+c:/3ds_dev/Sudoku3DS/build/sudoku3ds_bin.h:

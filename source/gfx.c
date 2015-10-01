@@ -21,6 +21,8 @@
 #include "immut_numbers_bin.h"
 #include "mut_numbers_bin.h"
 #include "selector_bin.h"
+#include "icon_bin.h"
+#include "sudoku3ds_bin.h"
 
 
 
@@ -40,6 +42,8 @@ SudokuGFX SudokuGFX_init() {
 	//init_background(my_gfx);
 	
 	//Load all images
+	my_gfx->sudoku3ds_text	= sfil_load_PNG_buffer(sudoku3ds_bin, SF2D_PLACE_RAM);
+	my_gfx->icon			= sfil_load_PNG_buffer(icon_bin, SF2D_PLACE_RAM);
 	my_gfx->bg 				= sfil_load_PNG_buffer(bg_bin, SF2D_PLACE_RAM);
 	my_gfx->immut_numbers 	= sfil_load_PNG_buffer(immut_numbers_bin, SF2D_PLACE_RAM);
 	my_gfx->mut_numbers 	= sfil_load_PNG_buffer(mut_numbers_bin, SF2D_PLACE_RAM);
@@ -77,7 +81,6 @@ void update_background_position(SudokuGFX s_gfx) {
 
 //Draws the scrolling boxes on the screen. 
 void draw_many_boxes(SudokuGFX s_gfx) {
-	if (s_gfx->top_frame % 2 == 0) update_background_position(s_gfx);
 	int i, j, x, y;
 	
 	for (i=0; i < TOP_H + 20; i+=6) {
@@ -99,14 +102,34 @@ void draw_many_boxes(SudokuGFX s_gfx) {
 
 
 void draw_top_background(SudokuGFX s_gfx) {
+	if (s_gfx->top_frame % 2 == 0) update_background_position(s_gfx);
 	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
 	draw_many_boxes(s_gfx);
+	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0x83));
 	sf2d_draw_rectangle(0, 2, TOP_W, 32, RGBA8(0xE9, 0x6E, 0x9C, 0xFF)); //draw status bar
+	sf2d_draw_texture(s_gfx->icon, 21, 0); //Icon
+	sf2d_draw_texture(s_gfx->sudoku3ds_text, -10, 5); //text
 
 }
 
+
+//ZZZ Probably faster to load this as a texture rather than objects?
 extern void draw_bottom_background(SudokuGFX s_gfx) {
-	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
+	sf2d_draw_rectangle(0, 0, BOTTOM_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));
+	draw_many_boxes(s_gfx);
+	sf2d_draw_rectangle(0, 0, BOTTOM_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0x93));  //draw plain bg
+	sf2d_draw_rectangle(0, -10, BOTTOM_W, 20, RGBA8(0xFA, 0xAA, 0xA3, 0x93)); //peach
+	sf2d_draw_rectangle(0, 30, BOTTOM_W, 20, RGBA8(0x8E, 0xCF, 0xB2, 0x93)); //green
+	sf2d_draw_rectangle(0, 70, BOTTOM_W, 20, RGBA8(0xE5, 0xCD, 0x7C, 0x93)); //yellow
+	sf2d_draw_rectangle(0, 110, BOTTOM_W, 20, RGBA8(0x7B, 0xD3, 0xEA, 0x93)); //blue
+	sf2d_draw_rectangle(0, 150, BOTTOM_W, 20, RGBA8(0xC3, 0xA7, 0xE0, 0x93)); //purple
+	sf2d_draw_rectangle(0, 190, BOTTOM_W, 20, RGBA8(0xD7, 0x9B, 0xB5, 0x93)); //pink
+	sf2d_draw_rectangle(0, 230, BOTTOM_W, 20, RGBA8(0xFA, 0xAA, 0xA3, 0x93)); //peach
+	//int x = BOTTOM_W/2 - ((9*TILE_SIZE)/2) - (2 * 2); 
+	//int y = BOTTOM_H/2 - ((9*TILE_SIZE)/2) - (2 * 2); 
+	//int width = BOTTOM_W - (2 * x);
+	//int height = BOTTOM_H - (2 * y);
+	//sf2d_draw_rectangle(x, y, width, height, RGBA8(0xF2, 0xF2, 0xF2, 0xFF)); //white box
 }
 
 
