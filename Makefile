@@ -32,8 +32,8 @@ BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
-APP_TITLE   :=  Sudoku3DS
-APP_DESCRIPTION:= Can we visualize this.
+APP_TITLE   :=  sudoku3ds
+APP_DESCRIPTION:= Sudoku for 3DS
 APP_AUTHOR  := Fittings
 
 

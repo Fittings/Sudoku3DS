@@ -6,9 +6,10 @@ Swap an entire rows/columns of 1 box with another box.
 Port over my solver from java. Need to include a bunch of methods
 
 	#VISUAL
-Make the cursor loop correctly. 
-]
-Interesting background - TOO INTERESTING
+Make the cursor loop as a user would expect. 
+Needs feedback for victory state. 
+	*-> What happens when I win? Disable controls and RESET?
+
 
 	#INPUT
 Take touch input.
@@ -22,14 +23,14 @@ Seperate GFX into dedicated files.
 
 
 	#MAKEFILE
-Need to properly update once I have finised ver 1
+Set it up to save correctly. Into a dedicated folder for 3DS files.
 
 
 	#OPTIMIZE 
 draw only when change occurs //Only start frame when needed
 
 	#REWORK
-Background drawing. This is currently too fast.
+Background doesn't draw correctly. Currently its doing work on arrays that are useless.
 
 
 	#BUGS

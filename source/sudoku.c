@@ -17,6 +17,7 @@ Sudoku sudoku_new(int n) {
 		return NULL;
 	}
 	memset(my_sudoku->edit_array, 0, my_sudoku->size * sizeof(int));
+	srand(time(NULL));
 	return my_sudoku;
 }
 
@@ -65,7 +66,7 @@ void sudoku_default(Sudoku sudoku) {
 
 //Deletes values of the sudoku puzzle with a percentage chance
 void sudoku_delete_space(Sudoku sudoku, int percentage) {
-	srand(time(NULL));
+	//srand(time(NULL));
 	int array_size = sudoku->size * sudoku->size;
 	int i;
 	for (i=0; i < array_size; i++) {
@@ -82,7 +83,7 @@ void sudoku_delete_space(Sudoku sudoku, int percentage) {
 //Flips a compeleted sudoku a random amounts of times around different axes
 //http://dryicons.com/blog/2009/08/14/a-simple-algorithm-for-generating-sudoku-puzzles/
 void sudoku_transform(Sudoku sudoku) {
-	srand(time(NULL));
+	//srand(time(NULL));
 	int i = 0;
 	while (i < 5000) { //Magic number, I know...
 		i++;
@@ -101,6 +102,60 @@ void sudoku_transform(Sudoku sudoku) {
 		
 	}
 
+}
+
+
+//Flips rows randomly in each small box
+void sudoku_flip_box_rows(Sudoku sudoku) {
+	int i, row,  size = sudoku->size, div_size=sqrt(size);
+	int old_div=0, new_div=div_size;
+	for (i=0; i < (size*size); i+=size) {
+		row = i/size;
+		printf("row: %i\n", row);
+		
+		//printf("rand: %i\n", rand_lim(100));
+		while (80 > rand_lim(100)) { //Keep swapping with 70% chance
+			int row1 = old_div + rand_lim(div_size-1); 
+			int row2 = old_div + rand_lim(div_size-1);
+			sudoku_swap_row(sudoku, row1, row2);
+		}
+		
+		if ((row % (div_size) == 0) && (row != 0)) { //Entered a new box. Re-set boundaries.
+			
+			old_div = new_div;
+			new_div += div_size;
+			printf("Upda on row: %i, with old: %i new: %i \n", row+1, old_div, new_div);
+		}
+		
+	}	
+
+}
+
+//This swaps rows. Intended to be used for the row flipping function.
+void sudoku_swap_row(Sudoku sudoku, int row1, int row2) {
+	//	if (row1 == row2) return;
+	int i = row1 * sudoku->size, j = row2 * sudoku->size;
+	int difference = j-i;
+	int temp;
+	int row_end = i +sudoku->size;
+	for (i=i;i < row_end; i++) {
+		temp = sudoku->sudoku_array[i];
+		sudoku->sudoku_array[i] = sudoku->sudoku_array[i+difference];
+		sudoku->sudoku_array[i+difference] = temp;
+	}
+}
+
+//this swaps columns. Intended to be used for the column flipping function.
+void sudoku_swap_col(Sudoku sudoku, int col1, int col2) {
+	int i, size = sudoku->size; 
+	int difference = col2-col1;
+	int temp;
+	for (i=col1; i < (size*size); i+=size) {
+		temp = sudoku->sudoku_array[i];
+		sudoku->sudoku_array[i] = sudoku->sudoku_array[i+difference];
+		sudoku->sudoku_array[i+difference] = temp;
+	}
+	
 }
 
 
@@ -137,7 +192,7 @@ void sudoku_flip_hori(Sudoku sudoku) {
 }
 
 
-
+//Flips numbers across the diagonal 
 void sudoku_flip_dia1(Sudoku sudoku) {
 	int i, size = sudoku->size;
 	for (i=0; i < (size * size); i++) {
@@ -151,11 +206,13 @@ void sudoku_flip_dia1(Sudoku sudoku) {
 			
 		}
 	}
+	
 
 
 
 }
 
+//Flips numbers across the diagonal /
 void sudoku_flip_dia2(Sudoku sudoku) {
 	int i, size = sudoku->size;
 	for (i=0; i < (size * size); i++) {
@@ -169,6 +226,11 @@ void sudoku_flip_dia2(Sudoku sudoku) {
 		}
 	}
 }
+
+
+
+
+
 
 
 //Checks every horizontal row for validity
@@ -243,7 +305,9 @@ int main(void) {
 	Sudoku my_sudoku = sudoku_new(9); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	//sudoku_print(my_sudoku); //Print
+	sudoku_print(my_sudoku);
 	printf("\nTransform\n");
+	sudoku_flip_box_rows(my_sudoku);
 	//sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
 	//my_sudoku->sudoku_array[0] = 0;//ZZZ TESTING
 	//my_sudoku->sudoku_array[1] = 0;//ZZZ TESTING

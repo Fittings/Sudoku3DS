@@ -106,9 +106,9 @@ void draw_top_background(SudokuGFX s_gfx) {
 	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0xFF));  //draw plain bg
 	draw_many_boxes(s_gfx);
 	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xF2, 0xF2, 0xF2, 0x83));
-	sf2d_draw_rectangle(0, 2, TOP_W, 32, RGBA8(0xE9, 0x6E, 0x9C, 0xFF)); //draw status bar
-	sf2d_draw_texture(s_gfx->icon, 21, 0); //Icon
-	sf2d_draw_texture(s_gfx->sudoku3ds_text, -10, 5); //text
+	sf2d_draw_rectangle(0, 5, TOP_W, 38, RGBA8(0xE9, 0x6E, 0x9C, 0xFF)); //draw status bar
+	sf2d_draw_texture(s_gfx->icon, 22, 0); //Icon
+	sf2d_draw_texture(s_gfx->sudoku3ds_text, -4, 14); //text
 
 }
 
@@ -125,11 +125,7 @@ extern void draw_bottom_background(SudokuGFX s_gfx) {
 	sf2d_draw_rectangle(0, 150, BOTTOM_W, 20, RGBA8(0xC3, 0xA7, 0xE0, 0x93)); //purple
 	sf2d_draw_rectangle(0, 190, BOTTOM_W, 20, RGBA8(0xD7, 0x9B, 0xB5, 0x93)); //pink
 	sf2d_draw_rectangle(0, 230, BOTTOM_W, 20, RGBA8(0xFA, 0xAA, 0xA3, 0x93)); //peach
-	//int x = BOTTOM_W/2 - ((9*TILE_SIZE)/2) - (2 * 2); 
-	//int y = BOTTOM_H/2 - ((9*TILE_SIZE)/2) - (2 * 2); 
-	//int width = BOTTOM_W - (2 * x);
-	//int height = BOTTOM_H - (2 * y);
-	//sf2d_draw_rectangle(x, y, width, height, RGBA8(0xF2, 0xF2, 0xF2, 0xFF)); //white box
+
 }
 
 
