@@ -119,9 +119,9 @@ void check_start_input(SudokuControl s_control) {
 	} else if (s_control->kDown & KEY_B) { //B
 		s_control->start_menu_flag = 0;
 	} else if (s_control->kDown & KEY_DOWN) { //down
-		s_control->start_cursor = s_control->start_cursor + 1 % START_SIZE;
+		s_control->start_cursor = mod(s_control->start_cursor+1, START_SIZE);
 	} else if (s_control->kDown & KEY_UP) { //up
-		s_control->start_cursor = s_control->start_cursor - 1 % START_SIZE;
+		s_control->start_cursor = mod(s_control->start_cursor-1, START_SIZE);
 	} else if (s_control->kDown & KEY_START) { //start
 		s_control->start_menu_flag = 0;
 	} else if (s_control->kDown & KEY_SELECT) { //select
@@ -137,7 +137,7 @@ void update_start_state(SudokuControl s_control) {
 
 //Draws the start state on the top screen. This is seperated in case some extra calculations need to be done here
 void draw_start_state_top(SudokuControl s_control) {
-	draw_start_gfx_top(s_control->sudoku_gfx);
+	draw_start_gfx_top(s_control->sudoku_gfx, s_control->start_cursor);
 }
 
 //Draws the start state on the bot screen. This is seperated in case some extra calculations need to be done here

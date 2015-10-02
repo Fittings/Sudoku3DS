@@ -10,9 +10,9 @@
 #define TOP_H 240
 #define BOTTOM_W 320
 #define BOTTOM_H 240
-#define TILE_SIZE 25
 
-extern void draw_start_gfx_top(SudokuGFX s_gfx);
+
+extern void draw_start_gfx_top(SudokuGFX s_gfx, int cursor);
 extern void draw_start_gfx_bottom(SudokuGFX s_gfx);
 
 #endif
