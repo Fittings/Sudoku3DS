@@ -2,8 +2,11 @@
 
 #include "sudoku.h" // Sudoku backend
 #include "sudokucontroller.h"
-#include "sudokugfx.h" // This is the gfx controller. ZZZ Not sure I would call it a controller?
+#include "gfx_info.h" // This is the gfx controller. ZZZ Not sure I would call it a controller?
 #include "startgfx.h" // For drawing the start menu
+#include "bggfx.h" // For drawing the bg
+#include "sudokugfx.h" //For drawing the sudoku puzzle
+#include "victorygfx.h" //For drawing the victory screen
 
 #define START_SIZE 3
 
@@ -49,13 +52,7 @@ void check_main_input(SudokuControl s_control) {
 
 
 
-void update_victory_state(SudokuControl s_control) {
-	if (check_all(s_control->sudoku)) {
-		s_control->victory_flag = 1;
-	} else {
-		s_control->victory_flag = 0;
-	}
-}
+
 
 //Updates the s_control struct with 
 void update_sudoku_input(SudokuControl s_control) {
@@ -95,7 +92,7 @@ void draw_main_state_bottom(SudokuControl s_control) {
 		draw_bottom_background(s_control->sudoku_gfx);
 		//Draw sudoku
 		draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset, s_control->cursor);
-		draw_victory(s_control->victory_flag); //Draw victory!
+		//draw_victory(s_control->victory_flag); //Draw victory!
 	
 }
 
@@ -167,16 +164,31 @@ void control_game(SudokuControl s_control) {
 	} else { //else we are controlling the board.
 		update_main_state(s_control);	
 	}
-	
+	if (check_all(s_control->sudoku)) {
+		s_control->victory_flag = 1;
+	}
 	draw_game(s_control);
 	
+}
+
+void update_victory_state(SudokuControl s_control) {
+	s_control->sudoku_gfx->victory_frame++;
+	if (s_control->sudoku_gfx->victory_frame > 30) { //Let victory frames go for this length
+		s_control->sudoku_gfx->victory_frame = 0;
+		s_control->victory_flag = 0;
+	}
 }
 
 void draw_game(SudokuControl s_control) {
 //DRAW STATE TOP
 	start_draw(s_control->sudoku_gfx, GFX_TOP); 
 	draw_main_state_top(s_control);	//draw game top
-	if (s_control->start_menu_flag == 1) draw_start_state_top(s_control);//draw_start_state_top; //draw start bottom
+	if (s_control->victory_flag == 1) {
+		update_victory_state(s_control);
+		draw_victory(s_control->sudoku_gfx);
+	}
+	if (s_control->start_menu_flag == 1) draw_start_state_top(s_control);//draw_start_state_top;
+	
 	end_draw(); 
 	//END TOP
 	

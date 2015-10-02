@@ -42,6 +42,7 @@ extern void draw_start_state_top(SudokuControl s_control);
 extern void draw_start_state_bottom(SudokuControl s_control);
 
 extern void control_game(SudokuControl s_control);
+extern void update_victory_state(SudokuControl s_control);
 extern void draw_game(SudokuControl s_control);
 extern SudokuControl initialize_game(int size, int percentage);
 extern void sudoku_control_free(SudokuControl s_control);

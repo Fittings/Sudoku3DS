@@ -1,11 +1,8 @@
-#include <stdlib.h> //malloc
-
 #include <3ds.h>
-#include <math.h> //sqrt
-
+#include <math.h>
 
 #include "startgfx.h"
-#include "sudoku.h" //ZZZ might not need this
+
 
 
 

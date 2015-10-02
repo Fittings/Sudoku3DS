@@ -2,22 +2,15 @@
 Port over my solver from java. Need to include a bunch of methods --Med priority
 
 	#VISUAL
-Needs feedback for victory state. 
-	*-> What happens when I win? Disable controls and RESET?
-
+Victory animation
 
 	#INPUT
 Take touch input. 		--Med priority
 Handle held-down input. --Low priority. Not important for this game.
+Y/X button sets space to 0
 
 	#CODE FORMATTING
 Clean up the files. Add things to gitignore and all that good stuff!
-Clean up #includes properly
-Re-logic all magic numbers.
-Seperate GFX into dedicated files.
-	*->Need to work on END and START being in sudokugfx. This is causing reliance of other gfx classes. MB just remove
-		and let the controller handle it? Means controller will depend on sf2dlib as well.
-		Maybe make some kind of controller for all gfx classes that sudokucontroller calls.
 
 	#Functionality
 Add Main menu
