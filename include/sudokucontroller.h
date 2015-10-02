@@ -1,8 +1,8 @@
 #ifndef SUDOKUCONTROL_H_
 #define SUDOKUCONTROL_H_
 
-#include <3ds.h>
 
+#include <3ds.h>
 
 
 
@@ -12,9 +12,7 @@ struct _SudokuControl {
 
 	int cursor, start_cursor;
 	int new_value, value; //ZZZ Might not even need this?
-	int exit_flag;
-	int start_menu_flag;
-	int victory_flag;
+	int start_menu_flag, allow_input_flag, victory_flag, exit_flag, reset_flag;
 	int flip; //ZZZ
 	//Input Values
 	u32 kDown;  

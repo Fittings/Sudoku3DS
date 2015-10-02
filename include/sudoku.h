@@ -21,8 +21,11 @@ struct _Sudoku {
 typedef struct _Sudoku *Sudoku;
 
 //Inits
-extern Sudoku sudoku_new(int n);
+extern Sudoku sudoku_new(int n, int seed);
+
+extern Sudoku sudoku_unique_setup(int n, int percentage, int seed);
 extern void sudoku_free(Sudoku sudoku);
+extern void sudoku_set_arrays_to_zero(Sudoku sudoku);
 
 //Other
 extern void sudoku_print(Sudoku sudoku);
@@ -30,6 +33,7 @@ extern void sudoku_print(Sudoku sudoku);
 //Array Set-up
 extern void sudoku_default(Sudoku sudoku);
 extern void sudoku_delete_space(Sudoku sudoku, int percentage);
+extern void sudoku_remake(Sudoku sudoku, int percentage);
 extern void sudoku_reset(Sudoku sudoku);
 
 //Transformations

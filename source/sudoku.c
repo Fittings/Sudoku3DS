@@ -1,10 +1,7 @@
 #include "sudoku.h"
 
-
-
-
 //Creates an empty representation of Sudoku of size n
-Sudoku sudoku_new(int n) {
+Sudoku sudoku_new(int n, int seed) {
 	Sudoku my_sudoku = malloc(sizeof *my_sudoku);
 	if (my_sudoku == NULL) { //Safety
 		free(my_sudoku);
@@ -16,9 +13,23 @@ Sudoku sudoku_new(int n) {
 	if (my_sudoku->sudoku_array == NULL || my_sudoku->edit_array == NULL) { //Safety
 		return NULL;
 	}
+	
 	memset(my_sudoku->edit_array, 0, my_sudoku->size * sizeof(int));
-	srand(time(NULL));
+	memset(my_sudoku->sudoku_array, 0, my_sudoku->size * sizeof(int));
+	//srand(time(NULL));
+	//srand(seed);
 	return my_sudoku;
+}
+
+
+
+//Creates a unique set-up initially
+Sudoku sudoku_unique_setup(int n, int percentage, int seed) {
+	Sudoku u_sudoku = sudoku_new(n, seed);
+	sudoku_default(u_sudoku);
+	sudoku_transform(u_sudoku);
+	sudoku_delete_space(u_sudoku, percentage);
+	return u_sudoku;
 }
 
 
@@ -26,11 +37,19 @@ Sudoku sudoku_new(int n) {
 void sudoku_free(Sudoku sudoku) {
 	if (sudoku != NULL) {  //Safety
 		free(sudoku->sudoku_array);
+		free(sudoku->edit_array);
 		sudoku->sudoku_array = 0; //optional
 		free(sudoku);
 	}
 }
 
+void sudoku_set_arrays_to_zero(Sudoku sudoku) {
+	int i, size = sudoku->size;
+	for (i=0; i < (size*size); i++) {
+		sudoku->edit_array[i] = 0;
+		sudoku->sudoku_array[i] = 0;
+	}
+}
 
 //This is only for my own testing sake
 void sudoku_print(Sudoku sudoku) {
@@ -76,6 +95,17 @@ void sudoku_delete_space(Sudoku sudoku, int percentage) {
 		}
 	}
 
+}
+
+//Re makes the board to a new state
+void sudoku_remake(Sudoku sudoku, int percentage) {
+	//reset edit_array
+	sudoku_set_arrays_to_zero(sudoku);
+	sudoku_default(sudoku);
+	sudoku_transform(sudoku);
+	sudoku_delete_space(sudoku, percentage);
+	//transform
+	//delete
 }
 
 //This resets all edited spots back to empty.
@@ -399,7 +429,9 @@ int check_all(Sudoku sudoku) {
 
 //Basic testing code for each function. Define SUDOKU_TEST at compile time to run. (See my test scripts)
 #ifdef SUDOKU_TEST
+
 int main(void) {
+/*
 	Sudoku my_sudoku = sudoku_new(9); //Create
 	sudoku_default(my_sudoku); //Creates a non-unique generic sudoku
 	//sudoku_print(my_sudoku); //Print
@@ -431,8 +463,9 @@ int main(void) {
 	sudoku_print(my_sudoku);
 	
 	
-	
-	printf("reseting at 0, 1, 2\n");
+	*/
+	Sudoku my_sudoku = sudoku_unique_setup(9, 70, 42142114);
+	//printf("reseting at 0, 1, 2\n");
 	sudoku_reset(my_sudoku);
 	sudoku_print(my_sudoku);
 	

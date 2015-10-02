@@ -28,6 +28,9 @@
 #include "text_reset_bin.h"
 #include "text_main_menu_bin.h"
 
+//Victory
+#include "victory_bin.h"
+
 
 /* This file is a struct dedicated to loading and keeping
  * control of variables needed by other graphics classes.
@@ -63,6 +66,9 @@ SudokuGFX SudokuGFX_init() {
 	my_gfx->text_quit_game 	= sfil_load_PNG_buffer(text_quit_game_bin, SF2D_PLACE_RAM);
 	my_gfx->text_reset		= sfil_load_PNG_buffer(text_reset_bin, SF2D_PLACE_RAM);
 	my_gfx->text_main_menu	= sfil_load_PNG_buffer(text_main_menu_bin, SF2D_PLACE_RAM);
+	
+	//Victory
+	my_gfx->victory			= sfil_load_PNG_buffer(victory_bin, SF2D_PLACE_RAM);
 	
 	return my_gfx;
 }

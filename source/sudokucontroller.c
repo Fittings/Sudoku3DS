@@ -15,6 +15,7 @@
 void check_input(SudokuControl s_control) {
 	hidScanInput();
 	s_control->kDown = hidKeysDown();
+	if (!s_control->allow_input_flag) return; //Exit if input is disabled.
 	if (s_control->start_menu_flag) {
 		check_start_input(s_control);
 	} else { //main game
@@ -32,6 +33,10 @@ void check_main_input(SudokuControl s_control) {
 		s_control->new_value = mod((s_control->sudoku)->sudoku_array[s_control->cursor]+1, size+1);
 	} else if (s_control->kDown & KEY_B) { //B
 		s_control->new_value = mod(s_control->sudoku->sudoku_array[s_control->cursor]-1, size+1);
+	} else if (s_control->kDown & KEY_X) { //X
+		s_control->new_value = 0;
+	} else if (s_control->kDown & KEY_Y) { //Y
+		s_control->new_value = 0;
 	} else if (s_control->kDown & KEY_DOWN) { //down
 		s_control->cursor = mod((s_control->cursor + size), (size*size)); 
 	} else if (s_control->kDown & KEY_UP) { //up
@@ -74,7 +79,10 @@ void update_main_state(SudokuControl s_control) {
 	check_input(s_control); //Get input for board
 	//Update with input
 	update_sudoku_input(s_control);
-	update_victory_state(s_control);
+	//s_control->victory_flag = check_all(s_control->sudoku);
+	if (s_control->victory_flag) {
+		update_victory_state(s_control);
+	}
 	
 	
 } 
@@ -87,12 +95,8 @@ void draw_main_state_bottom(SudokuControl s_control) {
 	int size = s_control->sudoku->size;
 	int x_offset = BOTTOM_W/2 - ((size*TILE_SIZE)/2) - (2 * 2); 
 	int y_offset = 2 + BOTTOM_H/2 - ((size*TILE_SIZE)/2) - (2 * 2); //ZZZ A little bit of magic numbers 
-	
-	
-		draw_bottom_background(s_control->sudoku_gfx);
-		//Draw sudoku
-		draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset, s_control->cursor);
-		//draw_victory(s_control->victory_flag); //Draw victory!
+	draw_bottom_background(s_control->sudoku_gfx);
+	draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset, s_control->cursor);
 	
 }
 
@@ -121,7 +125,7 @@ void start_menu_action(SudokuControl s_control) {
 void check_start_input(SudokuControl s_control) {
 
 	//Check key_presses
-	if (s_control->kDown & KEY_A) {
+	if (s_control->kDown & KEY_A) { //A
 		start_menu_action(s_control);
 	} else if (s_control->kDown & KEY_B) { //B
 		s_control->start_menu_flag = 0;
@@ -172,10 +176,16 @@ void control_game(SudokuControl s_control) {
 }
 
 void update_victory_state(SudokuControl s_control) {
+	s_control->allow_input_flag = 0;
 	s_control->sudoku_gfx->victory_frame++;
-	if (s_control->sudoku_gfx->victory_frame > 30) { //Let victory frames go for this length
+	
+	if (s_control->sudoku_gfx->victory_frame > 400) { //Let victory frames go for this length
 		s_control->sudoku_gfx->victory_frame = 0;
+		s_control->allow_input_flag = 1;
 		s_control->victory_flag = 0;
+		s_control->value = s_control->sudoku->sudoku_array[s_control->cursor];
+		s_control->new_value = s_control->value; //ZZZ Is this needed?
+		sudoku_remake(s_control->sudoku, s_control->percentage);
 	}
 }
 
@@ -183,9 +193,9 @@ void draw_game(SudokuControl s_control) {
 //DRAW STATE TOP
 	start_draw(s_control->sudoku_gfx, GFX_TOP); 
 	draw_main_state_top(s_control);	//draw game top
-	if (s_control->victory_flag == 1) {
+	if (s_control->victory_flag) {
 		update_victory_state(s_control);
-		draw_victory(s_control->sudoku_gfx);
+		draw_victory(s_control->sudoku_gfx, GFX_TOP);
 	}
 	if (s_control->start_menu_flag == 1) draw_start_state_top(s_control);//draw_start_state_top;
 	
@@ -195,12 +205,14 @@ void draw_game(SudokuControl s_control) {
 	//DRAW STATE BOTTOM
 	start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
 	draw_main_state_bottom(s_control);	//draw game bottom
+	if (s_control->victory_flag) draw_victory(s_control->sudoku_gfx, GFX_BOTTOM);
 	if (s_control->start_menu_flag == 1) draw_start_state_bottom(s_control); //draw start bottom
 	end_draw(); 
 	end();
 	//END BOTTOM
 
 }
+
 
 
 /* Initializes all the variables used for tracking. 
@@ -215,19 +227,20 @@ SudokuControl initialize_game(int size, int percentage) {
 		free(s_control);
 		return NULL;
 	}
-	s_control->sudoku = sudoku_new(size); 
-	sudoku_default(s_control->sudoku); 
-	sudoku_transform(s_control->sudoku);  
-	sudoku_delete_space(s_control->sudoku, percentage);
+	s_control->sudoku = sudoku_unique_setup(size, percentage, svcGetSystemTick());
 	
 	//Set-up variable states
+	s_control->percentage = percentage;
 	s_control->value = s_control->sudoku->sudoku_array[s_control->cursor];
 	s_control->new_value = s_control->value; //ZZZ Is this needed?
 	s_control->start_menu_flag = 0;
 	s_control->cursor = 0, s_control->percentage = percentage;
 	s_control->exit_flag = 0;
 	s_control->victory_flag = 0;
+	s_control->allow_input_flag = 1;
+	s_control->reset_flag = 0;
 	s_control->flip = 0;
+	
 	
 	//Set-up textures
 	s_control->sudoku_gfx = malloc(sizeof s_control->sudoku_gfx);

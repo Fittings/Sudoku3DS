@@ -4,6 +4,6 @@
 #include "gfx_info.h"
 
 extern void draw_stars();
-extern void draw_victory(SudokuGFX s_gfx);
+extern void draw_victory(SudokuGFX s_gfx, gfxScreen_t screen);
 
 #endif

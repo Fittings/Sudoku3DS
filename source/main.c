@@ -25,7 +25,7 @@
 
 //Some globals for easy modifications
 #define SU_SIZE 9
-#define SU_RAND 90
+#define SU_RAND 95
 
 
 
@@ -41,6 +41,7 @@ int main()
     while (aptMainLoop()) { //Program loop
 		control_game(s_control);
 		if (s_control->exit_flag) break;
+		
 	}
 	
 	sudoku_control_free(s_control);
