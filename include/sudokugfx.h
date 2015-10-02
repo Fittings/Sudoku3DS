@@ -14,7 +14,7 @@
 
 
 struct _SudokuGFX {
-	sf2d_texture *bg1, *bg2, *icon, *sudoku3ds_text;
+	sf2d_texture *bg1, *bg2, *icon, *text_sudoku3ds;
 	sf2d_texture *immut_numbers, *mut_numbers, *selector;
 	sf2d_texture *start_menu, *start_selector, *text_quit_game, *text_reset, *text_main_menu;
 	

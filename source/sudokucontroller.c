@@ -100,14 +100,24 @@ void draw_main_state_bottom(SudokuControl s_control) {
 }
 
 //Input handling for when the start menu is open
-void do_start_menu(SudokuControl s_control) {
+void start_menu_action(SudokuControl s_control) {
 	switch (s_control->start_cursor) {
 		case 0:
-			//ZZZ RESET - not implemented
-		case 1:
+			sudoku_reset(s_control->sudoku); //Reset edited board to original state
+			s_control->start_menu_flag = 0;
+			break;
+		case 1: 
 			//ZZZ go to main menu - not implemented
-		case 2: //EXIT
-			s_control->exit_flag = 1;
+			s_control->start_menu_flag = 0;
+			break;
+		case 2: 
+			s_control->start_menu_flag = 0;
+			s_control->exit_flag = 1; //Quit game
+			break;
+		default:
+			s_control->start_menu_flag = 0;
+			s_control->exit_flag = 1; //Quit game
+			break;
 	}
 }
 
@@ -115,7 +125,7 @@ void check_start_input(SudokuControl s_control) {
 
 	//Check key_presses
 	if (s_control->kDown & KEY_A) {
-		//start_menu_do(s_control
+		start_menu_action(s_control);
 	} else if (s_control->kDown & KEY_B) { //B
 		s_control->start_menu_flag = 0;
 	} else if (s_control->kDown & KEY_DOWN) { //down

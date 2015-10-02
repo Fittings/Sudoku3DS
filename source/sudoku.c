@@ -78,6 +78,16 @@ void sudoku_delete_space(Sudoku sudoku, int percentage) {
 
 }
 
+//This resets all edited spots back to empty.
+void sudoku_reset(Sudoku sudoku) {
+	int i, size = sudoku->size;
+	for (i=0; i < (size*size); i++) {
+		if (sudoku->edit_array[i] == 1) {
+			sudoku->sudoku_array[i] = 0;
+		}
+	}
+}
+
 
 
 //Flips a compeleted sudoku a random amounts of times around different axes
@@ -398,9 +408,7 @@ int main(void) {
 	//sudoku_swap_brow(my_sudoku, 2, 1);
 	//sudoku_flip_colbox(my_sudoku);
 	sudoku_transform(my_sudoku); //Flips on many axes to create a unique sudoku
-	//my_sudoku->sudoku_array[0] = 0;//ZZZ TESTING
-	//my_sudoku->sudoku_array[1] = 0;//ZZZ TESTING
-	//my_sudoku->sudoku_array[9] = 1;
+	
 	sudoku_print(my_sudoku);
 	
 	printf("Hors?: %i\n", check_horizontals(my_sudoku));
@@ -410,8 +418,26 @@ int main(void) {
 	printf("\n");
 	
 	
-	//sudoku_delete_space(my_sudoku, 70); //Deletes spaces a random percentage
-	//sudoku_print(my_sudoku);
+	sudoku_delete_space(my_sudoku, 70); //Deletes spaces a random percentage
+	sudoku_print(my_sudoku);
+	printf("\n");
+	int i;
+	for (i=0; i < (my_sudoku->size * my_sudoku->size); i++) {
+		if (my_sudoku->edit_array[i] == 1) {
+			my_sudoku->sudoku_array[i] = 8;
+		}
+	}
+	
+	sudoku_print(my_sudoku);
+	
+	
+	
+	printf("reseting at 0, 1, 2\n");
+	sudoku_reset(my_sudoku);
+	sudoku_print(my_sudoku);
+	
+	
+	
 	printf("Free\n");
 	sudoku_free(my_sudoku); 
 	printf("Done\n");

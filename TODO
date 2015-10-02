@@ -1,15 +1,14 @@
 	#PORT SOLVER
-Port over my solver from java. Need to include a bunch of methods
+Port over my solver from java. Need to include a bunch of methods --Med priority
 
 	#VISUAL
-Fix the text. Looks bad. Make larger to fix issues or install a text library?
 Needs feedback for victory state. 
 	*-> What happens when I win? Disable controls and RESET?
 
 
 	#INPUT
-Take touch input.
-Handle held-down input
+Take touch input. 		--Med priority
+Handle held-down input. --Low priority. Not important for this game.
 
 	#CODE FORMATTING
 Clean up the files. Add things to gitignore and all that good stuff!
@@ -23,27 +22,12 @@ Seperate GFX into dedicated files.
 	#Functionality
 Add Main menu
 	*-> difficulty
-	
-Add start screen
-	*-> RESET -> do this in sudoku class
-	*-> main menu
-	*-> exit
-
 
 	#MAKEFILE
 Set it up to save correctly. Into a dedicated folder for 3DS files.
 
-
 	#OPTIMIZE 
 draw only when change occurs //Only start frame when needed
-
-	#REWORK
-Background doesn't draw correctly. Currently its doing work on arrays that are useless.
-	*-> Just make it a single texture and keep doing what Im doing
-
-	#BUGS
-
-	
 
 
 

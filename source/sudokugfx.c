@@ -21,7 +21,7 @@
 #include "bg1_bin.h"
 #include "bg2_bin.h"
 #include "icon_bin.h"
-#include "sudoku3ds_bin.h"
+#include "text_sudoku3ds_bin.h"
 
 //Sudoku
 #include "immut_numbers_bin.h"
@@ -58,7 +58,7 @@ SudokuGFX SudokuGFX_init() {
 	//Load Main BG images
 	my_gfx->bg1				= sfil_load_PNG_buffer(bg1_bin, SF2D_PLACE_RAM);
 	my_gfx->bg2				= sfil_load_PNG_buffer(bg2_bin, SF2D_PLACE_RAM);
-	my_gfx->sudoku3ds_text	= sfil_load_PNG_buffer(sudoku3ds_bin, SF2D_PLACE_RAM);
+	my_gfx->text_sudoku3ds	= sfil_load_PNG_buffer(text_sudoku3ds_bin, SF2D_PLACE_RAM);
 	my_gfx->icon			= sfil_load_PNG_buffer(icon_bin, SF2D_PLACE_RAM);
 	
 	//Load Sudoku Images
@@ -118,7 +118,7 @@ void draw_top_background(SudokuGFX s_gfx) {
 	
 	sf2d_draw_rectangle(0, 5, TOP_W, 38, RGBA8(0xE9, 0x6E, 0x9C, 0xFF)); //draw status bar
 	sf2d_draw_texture(s_gfx->icon, 22, 0); //Icon
-	sf2d_draw_texture(s_gfx->sudoku3ds_text, -4, 14); //text
+	sf2d_draw_texture(s_gfx->text_sudoku3ds, 80, 28); //text sudoku3ds
 
 }
 

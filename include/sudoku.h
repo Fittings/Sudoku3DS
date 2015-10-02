@@ -20,15 +20,19 @@ struct _Sudoku {
 
 typedef struct _Sudoku *Sudoku;
 
+//Inits
 extern Sudoku sudoku_new(int n);
 extern void sudoku_free(Sudoku sudoku);
 
+//Other
 extern void sudoku_print(Sudoku sudoku);
 
-
+//Array Set-up
 extern void sudoku_default(Sudoku sudoku);
 extern void sudoku_delete_space(Sudoku sudoku, int percentage);
+extern void sudoku_reset(Sudoku sudoku);
 
+//Transformations
 extern void sudoku_transform(Sudoku sudoku);
 extern void sudoku_flip_box_rows(Sudoku sudoku);
 extern void sudoku_flip_box_cols(Sudoku sudoku);
@@ -43,6 +47,7 @@ extern void sudoku_flip_hori(Sudoku sudoku);
 extern void sudoku_flip_dia1(Sudoku sudoku);
 extern void sudoku_flip_dia2(Sudoku sudoku);
 
+//Checks
 extern int check_horizontals(Sudoku sudoku);
 extern int check_verticals(Sudoku sudoku);
 extern int check_boxes(Sudoku sudoku);
