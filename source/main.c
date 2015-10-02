@@ -39,7 +39,7 @@ int main()
 
 	
     while (aptMainLoop()) { //Program loop
-		update_state(s_control);
+		control_game(s_control);
 		if (s_control->exit_flag) break;
 	}
 	

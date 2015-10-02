@@ -3,6 +3,7 @@ Port over my solver from java. Need to include a bunch of methods
 
 	#VISUAL
 Make the cursor loop as a user would expect. 
+Fix the text. Looks bad. Make larger to fix issues or install a text library?
 Needs feedback for victory state. 
 	*-> What happens when I win? Disable controls and RESET?
 
@@ -16,6 +17,15 @@ Clean up the files. Add things to gitignore and all that good stuff!
 Clean up #includes properly
 Re-logic all magic numbers.
 Seperate GFX into dedicated files.
+
+	#Functionality
+Add Main menu
+	*-> difficulty
+	
+Add start screen
+	*-> RESET -> do this in sudoku class
+	*-> main menu
+	*-> exit
 
 
 	#MAKEFILE
