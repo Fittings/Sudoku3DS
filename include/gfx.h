@@ -14,11 +14,9 @@
 
 
 struct _SudokuGFX {
-	sf2d_texture *bg, *immut_numbers, *mut_numbers, *selector, *icon, *sudoku3ds_text;
-	int *first_bg_array;
-	int *second_bg_array;
+	sf2d_texture *bg1, *bg2, *immut_numbers, *mut_numbers, *selector, *icon, *sudoku3ds_text;
 	
-	int top_frame, bottom_frame, flip;
+	int top_frame, bottom_frame, bg_count;
 }; 
 typedef struct _SudokuGFX *SudokuGFX; 
 

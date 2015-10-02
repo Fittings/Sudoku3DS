@@ -2,9 +2,7 @@
 Thumbs.db
 ehthumbs.db
 
-#User Defined
-build
-art
+
 
 # Folder config file
 Desktop.ini
@@ -52,3 +50,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#User Defined
+build
+art
