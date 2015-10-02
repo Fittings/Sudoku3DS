@@ -37,7 +37,9 @@ extern void draw_bottom_background(SudokuGFX s_gfx);
 
 extern void draw_victory(int victory_flag);
 extern void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, int x_offset, int y_offset, int cursor);
-//extern void draw_selector(SudokuGFX s_gfx, int cursor, int size, int x_offset, int y_offset);
+
+
+
 extern void start_draw(SudokuGFX s_gfx, gfxScreen_t screen);
 extern void end_draw();
 extern void end(); //ZZZ consider refactoring this

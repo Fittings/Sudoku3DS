@@ -1,5 +1,3 @@
-//#include <string.h>
-//#include <stdio.h> //printf
 #include <stdlib.h> //malloc
 
 #include <3ds.h>
@@ -10,6 +8,7 @@
 #include "sudoku.h" //ZZZ might not need this
 #include "mylib.h" //mod
 #include "sudokugfx.h"
+#include "startgfx.h" //Start menu graphics
 
 #define BG_COL 40 //Need to remove these magic numbers and actually do the maths on this.
 #define BG_ROW 75
@@ -25,6 +24,12 @@
 #include "icon_bin.h"
 #include "sudoku3ds_bin.h"
 
+/* This file is a struct dedicated to loading and keeping
+ * control of variables needed by other graphics classes.
+ * ZZZ I need to seperate all draws into another class
+ */
+
+
 
 
 SudokuGFX SudokuGFX_init() {
@@ -34,7 +39,6 @@ SudokuGFX SudokuGFX_init() {
 		free(my_gfx);
 		return NULL;
 	}
-
 	my_gfx->bg_count = 0;
 	my_gfx->top_frame = 0;
 	my_gfx->bottom_frame = 0;
@@ -159,6 +163,8 @@ void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, 
 		row++;
 	} 
 }
+
+
 
 
 //This should be called paired with end_draw()

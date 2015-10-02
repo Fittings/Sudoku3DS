@@ -26,7 +26,7 @@ struct _SudokuControl {
 };
 typedef struct _SudokuControl *SudokuControl;
 
-
+extern void check_input(SudokuControl s_control);
 
 //Main Game State
 extern void check_main_input(SudokuControl s_control);

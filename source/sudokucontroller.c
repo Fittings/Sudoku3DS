@@ -1,17 +1,27 @@
 
 
-#include "sudoku.h"
+#include "sudoku.h" // Sudoku backend
 #include "sudokucontroller.h"
-#include "sudokugfx.h"
+#include "sudokugfx.h" // This is the gfx controller. ZZZ Not sure I would call it a controller?
+#include "startgfx.h" // For drawing the start menu
 
 #define START_SIZE 3
 
 
 
-//takes keys_down and all that
-void check_main_input(SudokuControl s_control) { 
+void check_input(SudokuControl s_control) {
 	hidScanInput();
 	s_control->kDown = hidKeysDown();
+	if (s_control->start_menu_flag) {
+		check_start_input(s_control);
+	} else { //main game
+		check_main_input(s_control);
+	}
+}
+
+//takes keys_down and all that
+void check_main_input(SudokuControl s_control) { 
+	
 	int size = s_control->sudoku->size; 
 	
 	//Check key_presses
@@ -22,7 +32,6 @@ void check_main_input(SudokuControl s_control) {
 	} else if (s_control->kDown & KEY_DOWN) { //down
 		s_control->cursor = mod((s_control->cursor + size), (size*size)); 
 	} else if (s_control->kDown & KEY_UP) { //up
-		int row = s_control->cursor+size/ size % size;
 		s_control->cursor = mod((s_control->cursor - size), (size*size));
 	} else if (s_control->kDown & KEY_LEFT) { //left
 		int new_col = mod((s_control->cursor-1), size); //need to use mod as % doesn't work for negatives.
@@ -65,7 +74,7 @@ void update_sudoku_input(SudokuControl s_control) {
 //Updates
 void update_main_state(SudokuControl s_control) {
 	
-	check_main_input(s_control); //Get input for board
+	check_input(s_control); //Get input for board
 	//Update with input
 	update_sudoku_input(s_control);
 	update_victory_state(s_control);
@@ -91,7 +100,6 @@ void draw_main_state_bottom(SudokuControl s_control) {
 }
 
 //Input handling for when the start menu is open
-
 void do_start_menu(SudokuControl s_control) {
 	switch (s_control->start_cursor) {
 		case 0:
@@ -104,40 +112,47 @@ void do_start_menu(SudokuControl s_control) {
 }
 
 void check_start_input(SudokuControl s_control) {
-	hidScanInput();
-	s_control->kDown = hidKeysDown();
-	
-	if (s_control->kDown) {
-		if (KEY_DOWN) {
-			s_control->start_cursor = s_control->start_cursor + 1 % START_SIZE;
-		} else if (KEY_UP) {
-			s_control->start_cursor = s_control->start_cursor + 1 % START_SIZE;
-		} else if (KEY_A) {
-			//start_menu_do(s_control
-		} else if (KEY_B || KEY_START) { //exit menu
-			s_control->start_menu_flag = 0;
-		} 
+
+	//Check key_presses
+	if (s_control->kDown & KEY_A) {
+		//start_menu_do(s_control
+	} else if (s_control->kDown & KEY_B) { //B
+		s_control->start_menu_flag = 0;
+	} else if (s_control->kDown & KEY_DOWN) { //down
+		s_control->start_cursor = s_control->start_cursor + 1 % START_SIZE;
+	} else if (s_control->kDown & KEY_UP) { //up
+		s_control->start_cursor = s_control->start_cursor - 1 % START_SIZE;
+	} else if (s_control->kDown & KEY_START) { //start
+		s_control->start_menu_flag = 0;
+	} else if (s_control->kDown & KEY_SELECT) { //select
+		s_control->exit_flag = 1;
 	}
+
+	
 }
 
 void update_start_state(SudokuControl s_control) {
-	if (!s_control->kDown) return; //no input
-	check_start_input(s_control);
+	check_input(s_control);
 }
 
+//Draws the start state on the top screen. This is seperated in case some extra calculations need to be done here
 void draw_start_state_top(SudokuControl s_control) {
+	draw_start_gfx_top(s_control->sudoku_gfx);
 }
 
+//Draws the start state on the bot screen. This is seperated in case some extra calculations need to be done here
 void draw_start_state_bottom(SudokuControl s_control) {
-	
-	
+	draw_start_gfx_bottom(s_control->sudoku_gfx);
 }
+
+
 
 //Controls the game input/update/draw flow.
 void control_game(SudokuControl s_control) {
 	
 	if (s_control->start_menu_flag == 1) { //Enter Start menu
 		update_start_state(s_control);
+		//ZZZ test code ignore please
 		//Check for input
 	} else { //else we are controlling the board.
 		update_main_state(s_control);	
@@ -151,14 +166,14 @@ void draw_game(SudokuControl s_control) {
 //DRAW STATE TOP
 	start_draw(s_control->sudoku_gfx, GFX_TOP); 
 	draw_main_state_top(s_control);	//draw game top
-	if (s_control->start_menu_flag == 1) printf("hello world");//draw_start_state_top; //draw start bottom
+	if (s_control->start_menu_flag == 1) draw_start_state_top(s_control);//draw_start_state_top; //draw start bottom
 	end_draw(); 
 	//END TOP
 	
 	//DRAW STATE BOTTOM
 	start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
 	draw_main_state_bottom(s_control);	//draw game bottom
-	if (s_control->start_menu_flag == 1) printf("hello world");//draw_start_state_bottom; //draw start bottom
+	if (s_control->start_menu_flag == 1) draw_start_state_bottom(s_control); //draw start bottom
 	end_draw(); 
 	end();
 	//END BOTTOM
