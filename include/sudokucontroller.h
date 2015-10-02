@@ -36,7 +36,9 @@ extern void draw_main_state_bottom(SudokuControl s_control);
 
 //Start Menu State
 extern void check_start_input(SudokuControl s_control);
-extern void draw_main_state(SudokuControl s_control);
+extern void update_start_state(SudokuControl s_control);
+extern void draw_start_state_top(SudokuControl s_control);
+extern void draw_start_state_bottom(SudokuControl s_control);
 
 extern void control_game(SudokuControl s_control);
 extern void draw_game(SudokuControl s_control);

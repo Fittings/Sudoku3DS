@@ -9,7 +9,7 @@
 
 #include "sudoku.h" //ZZZ might not need this
 #include "mylib.h" //mod
-#include "gfx.h"
+#include "sudokugfx.h"
 
 #define BG_COL 40 //Need to remove these magic numbers and actually do the maths on this.
 #define BG_ROW 75

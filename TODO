@@ -2,7 +2,6 @@
 Port over my solver from java. Need to include a bunch of methods
 
 	#VISUAL
-Make the cursor loop as a user would expect. 
 Fix the text. Looks bad. Make larger to fix issues or install a text library?
 Needs feedback for victory state. 
 	*-> What happens when I win? Disable controls and RESET?

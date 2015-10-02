@@ -2,7 +2,7 @@
 
 #include "sudoku.h"
 #include "sudokucontroller.h"
-#include "gfx.h"
+#include "sudokugfx.h"
 
 #define START_SIZE 3
 
@@ -22,13 +22,16 @@ void check_main_input(SudokuControl s_control) {
 	} else if (s_control->kDown & KEY_DOWN) { //down
 		s_control->cursor = mod((s_control->cursor + size), (size*size)); 
 	} else if (s_control->kDown & KEY_UP) { //up
+		int row = s_control->cursor+size/ size % size;
 		s_control->cursor = mod((s_control->cursor - size), (size*size));
 	} else if (s_control->kDown & KEY_LEFT) { //left
-		s_control->cursor = mod((s_control->cursor - 1), (size*size));
+		int new_col = mod((s_control->cursor-1), size); //need to use mod as % doesn't work for negatives.
+		s_control->cursor = s_control->cursor - (s_control->cursor % size) + new_col;
 	} else if (s_control->kDown & KEY_RIGHT) { //right
-		s_control->cursor = mod((s_control->cursor + 1), (size*size));
+		int new_col = (s_control->cursor+1) % size;
+		s_control->cursor = s_control->cursor - (s_control->cursor % size) + new_col;
 	} else if (s_control->kDown & KEY_START) { //start
-		s_control->exit_flag = 1;
+		s_control->start_menu_flag = 1;
 	} else if (s_control->kDown & KEY_SELECT) { //select
 		s_control->exit_flag = 1;
 	}
@@ -88,6 +91,18 @@ void draw_main_state_bottom(SudokuControl s_control) {
 }
 
 //Input handling for when the start menu is open
+
+void do_start_menu(SudokuControl s_control) {
+	switch (s_control->start_cursor) {
+		case 0:
+			//ZZZ RESET - not implemented
+		case 1:
+			//ZZZ go to main menu - not implemented
+		case 2: //EXIT
+			s_control->exit_flag = 1;
+	}
+}
+
 void check_start_input(SudokuControl s_control) {
 	hidScanInput();
 	s_control->kDown = hidKeysDown();
@@ -98,7 +113,7 @@ void check_start_input(SudokuControl s_control) {
 		} else if (KEY_UP) {
 			s_control->start_cursor = s_control->start_cursor + 1 % START_SIZE;
 		} else if (KEY_A) {
-			//do action at a. How do I implement this? Maybe a switch in another function.
+			//start_menu_do(s_control
 		} else if (KEY_B || KEY_START) { //exit menu
 			s_control->start_menu_flag = 0;
 		} 
@@ -106,9 +121,19 @@ void check_start_input(SudokuControl s_control) {
 }
 
 void update_start_state(SudokuControl s_control) {
+	if (!s_control->kDown) return; //no input
+	check_start_input(s_control);
+}
+
+void draw_start_state_top(SudokuControl s_control) {
+}
+
+void draw_start_state_bottom(SudokuControl s_control) {
+	
 	
 }
- //ZZZ Drawing START/END will need to be moved here from draw main state
+
+//Controls the game input/update/draw flow.
 void control_game(SudokuControl s_control) {
 	
 	if (s_control->start_menu_flag == 1) { //Enter Start menu
@@ -126,12 +151,14 @@ void draw_game(SudokuControl s_control) {
 //DRAW STATE TOP
 	start_draw(s_control->sudoku_gfx, GFX_TOP); 
 	draw_main_state_top(s_control);	//draw game top
+	if (s_control->start_menu_flag == 1) printf("hello world");//draw_start_state_top; //draw start bottom
 	end_draw(); 
 	//END TOP
 	
 	//DRAW STATE BOTTOM
 	start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
 	draw_main_state_bottom(s_control);	//draw game bottom
+	if (s_control->start_menu_flag == 1) printf("hello world");//draw_start_state_bottom; //draw start bottom
 	end_draw(); 
 	end();
 	//END BOTTOM

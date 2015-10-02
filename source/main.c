@@ -15,7 +15,7 @@
 //#include "sudoku.h"
 #include "sudokucontroller.h"
 //#include "gfx.h" 
-#include "sudoku.h" //zzz
+//#include "sudoku.h" //zzz
 
 
 //ZZZ #include <sf2d.h>
