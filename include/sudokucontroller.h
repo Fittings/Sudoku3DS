@@ -31,13 +31,15 @@ typedef struct _SudokuControl *SudokuControl;
 //Main Game State
 extern void check_main_input(SudokuControl s_control);
 extern void update_main_state(SudokuControl s_control);
-extern void draw_main_state(SudokuControl s_control);
+extern void draw_main_state_top(SudokuControl s_control);
+extern void draw_main_state_bottom(SudokuControl s_control);
 
 //Start Menu State
 extern void check_start_input(SudokuControl s_control);
 extern void draw_main_state(SudokuControl s_control);
 
 extern void control_game(SudokuControl s_control);
+extern void draw_game(SudokuControl s_control);
 extern SudokuControl initialize_game(int size, int percentage);
 extern void sudoku_control_free(SudokuControl s_control);
 

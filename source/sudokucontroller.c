@@ -70,28 +70,21 @@ void update_main_state(SudokuControl s_control) {
 	
 } 
 
-void draw_main_state(SudokuControl s_control) {
-	int size = s_control->sudoku->size; 
-	int x_offset = TOP_W/2 - ((size*TILE_SIZE)/2); 
-	int y_offset = TOP_H/2 - ((size*TILE_SIZE)/2);
-	//DRAW STATE TOP
-	start_draw(s_control->sudoku_gfx, GFX_TOP); 
-		draw_top_background(s_control->sudoku_gfx); //Draw background!
-	end_draw(); 
-	//END TOP
+void draw_main_state_top(SudokuControl s_control) {
+	draw_top_background(s_control->sudoku_gfx); //Draw background!
+}
+
+void draw_main_state_bottom(SudokuControl s_control) {
+	int size = s_control->sudoku->size;
+	int x_offset = BOTTOM_W/2 - ((size*TILE_SIZE)/2) - (2 * 2); 
+	int y_offset = 2 + BOTTOM_H/2 - ((size*TILE_SIZE)/2) - (2 * 2); //ZZZ A little bit of magic numbers 
 	
-	x_offset = BOTTOM_W/2 - ((size*TILE_SIZE)/2) - (2 * 2); 
-	y_offset =2 + BOTTOM_H/2 - ((size*TILE_SIZE)/2) - (2 * 2);
 	
-	//DRAW STATE BOTTOM
-	start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
 		draw_bottom_background(s_control->sudoku_gfx);
 		//Draw sudoku
 		draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset, s_control->cursor);
 		draw_victory(s_control->victory_flag); //Draw victory!
-	end_draw(); 
-	end();
-	//END BOTTOM
+	
 }
 
 //Input handling for when the start menu is open
@@ -113,17 +106,36 @@ void check_start_input(SudokuControl s_control) {
 }
 
 void update_start_state(SudokuControl s_control) {
-	//do
+	
 }
-
+ //ZZZ Drawing START/END will need to be moved here from draw main state
 void control_game(SudokuControl s_control) {
-	draw_main_state(s_control);	//draw game
-	if (s_control->start_menu_flag == 1) {
-		//update_start_state(s_control);
+	
+	if (s_control->start_menu_flag == 1) { //Enter Start menu
+		update_start_state(s_control);
 		//Check for input
 	} else { //else we are controlling the board.
 		update_main_state(s_control);	
 	}
+	
+	draw_game(s_control);
+	
+}
+
+void draw_game(SudokuControl s_control) {
+//DRAW STATE TOP
+	start_draw(s_control->sudoku_gfx, GFX_TOP); 
+	draw_main_state_top(s_control);	//draw game top
+	end_draw(); 
+	//END TOP
+	
+	//DRAW STATE BOTTOM
+	start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
+	draw_main_state_bottom(s_control);	//draw game bottom
+	end_draw(); 
+	end();
+	//END BOTTOM
+
 }
 
 
