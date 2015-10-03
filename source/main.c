@@ -1,7 +1,4 @@
-//#include <string.h> //strcat
-//#include <stdio.h> //printf
 #include <stdlib.h> //malloc
-//#include <math.h> //sqrt
 
 
 #include <unistd.h>
@@ -12,10 +9,7 @@
 #include "mylib.h" //mod
 
 
-//#include "sudoku.h"
 #include "sudokucontroller.h"
-//#include "gfx.h" 
-//#include "sudoku.h" //zzz
 
 
 //ZZZ #include <sf2d.h>
@@ -25,7 +19,7 @@
 
 //Some globals for easy modifications
 #define SU_SIZE 9
-#define SU_RAND 70
+#define SU_RAND 95
 
 
 

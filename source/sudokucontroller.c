@@ -6,6 +6,7 @@
 #include "startgfx.h" // For drawing the start menu
 #include "bggfx.h" // For drawing the bg
 #include "sudokugfx.h" //For drawing the sudoku puzzle
+#include "menugfx.h" //For drawing the main menu
 #include "victorygfx.h" //For drawing the victory screen
 
 #define START_SIZE 3
@@ -100,6 +101,9 @@ void draw_main_state_bottom(SudokuControl s_control) {
 	
 }
 
+
+
+
 //Input handling for when the start menu is open
 void start_menu_action(SudokuControl s_control) {
 	switch (s_control->start_cursor) {
@@ -142,6 +146,7 @@ void check_start_input(SudokuControl s_control) {
 	
 }
 
+//Call to check input relating to the start menu and update it.
 void update_start_state(SudokuControl s_control) {
 	check_input(s_control);
 }
@@ -156,15 +161,40 @@ void draw_start_state_bottom(SudokuControl s_control) {
 	draw_start_gfx_bottom(s_control->sudoku_gfx);
 }
 
+void check_main_menu_input(SudokuControl s_control) {
+	hidScanInput();
+	s_control->kDown = hidKeysDown();
+	if (s_control->kDown & KEY_START) {
+		s_control->main_menu_flag = 0;
+		create_new_game(s_control);
+		
+	} else if (s_control->kDown & KEY_L) {
+		s_control->percentage = s_control->percentage+10 % 100;
+	} else if (s_control->kDown & KEY_R) {
+		s_control->percentage = s_control->percentage-10 % 100;
+	}
+}
+
+void update_main_menu_state(SudokuControl s_control) {
+	check_main_menu_input(s_control);
+}
+
 
 
 //Controls the game input/update/draw flow.
 void control_game(SudokuControl s_control) {
-	
+	if (s_control->main_menu_flag == 1) {
+		update_main_menu_state(s_control); 
+		start_draw(s_control->sudoku_gfx, GFX_TOP);
+		draw_main_menu(s_control->sudoku_gfx, s_control->percentage);
+		
+		end_draw(); 
+		end();
+		return;
+	}
+		
 	if (s_control->start_menu_flag == 1) { //Enter Start menu
 		update_start_state(s_control);
-		//ZZZ test code ignore please
-		//Check for input
 	} else { //else we are controlling the board.
 		update_main_state(s_control);	
 	}
@@ -175,17 +205,22 @@ void control_game(SudokuControl s_control) {
 	
 }
 
+
+void create_new_game(SudokuControl s_control) {
+	s_control->sudoku_gfx->victory_frame = 0;
+	s_control->allow_input_flag = 1;
+	s_control->victory_flag = 0;
+	s_control->value = s_control->sudoku->sudoku_array[s_control->cursor];
+	s_control->new_value = s_control->value; //ZZZ Is this needed?
+	sudoku_remake(s_control->sudoku, s_control->percentage);
+}
+
+
 void update_victory_state(SudokuControl s_control) {
 	s_control->allow_input_flag = 0;
 	s_control->sudoku_gfx->victory_frame++;
-	
 	if (s_control->sudoku_gfx->victory_frame > 400) { //Let victory frames go for this length
-		s_control->sudoku_gfx->victory_frame = 0;
-		s_control->allow_input_flag = 1;
-		s_control->victory_flag = 0;
-		s_control->value = s_control->sudoku->sudoku_array[s_control->cursor];
-		s_control->new_value = s_control->value; //ZZZ Is this needed?
-		sudoku_remake(s_control->sudoku, s_control->percentage);
+		create_new_game(s_control);
 	}
 }
 
@@ -234,11 +269,14 @@ SudokuControl initialize_game(int size, int percentage) {
 	s_control->value = s_control->sudoku->sudoku_array[s_control->cursor];
 	s_control->new_value = s_control->value; //ZZZ Is this needed?
 	s_control->start_menu_flag = 0;
+	s_control->start_cursor = 0;
 	s_control->cursor = 0, s_control->percentage = percentage;
+	s_control->main_cursor = 0;
 	s_control->exit_flag = 0;
 	s_control->victory_flag = 0;
 	s_control->allow_input_flag = 1;
 	s_control->reset_flag = 0;
+	s_control->main_menu_flag = 1;
 	s_control->flip = 0;
 	
 	
