@@ -13,7 +13,7 @@ struct _SudokuControl {
 	int cursor, start_cursor, main_cursor;
 	int new_value, value; //ZZZ Might not even need this?
 	int start_menu_flag, main_menu_flag, allow_input_flag, victory_flag, exit_flag, reset_flag;
-	int flip; //ZZZ
+	int score; //ZZZ
 	//Input Values
 	u32 kDown;  
 	
@@ -47,6 +47,7 @@ extern void check_main_menu_input(SudokuControl s_control);
 extern void update_main_menu_state(SudokuControl s_control);
 
 extern void control_game(SudokuControl s_control);
+extern void reset_control_state(SudokuControl s_control);
 extern void create_new_game(SudokuControl s_control);
 extern void update_victory_state(SudokuControl s_control);
 extern void draw_game(SudokuControl s_control);

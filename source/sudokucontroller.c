@@ -82,6 +82,7 @@ void update_main_state(SudokuControl s_control) {
 	update_sudoku_input(s_control);
 	//s_control->victory_flag = check_all(s_control->sudoku);
 	if (s_control->victory_flag) {
+		s_control->score++;                    
 		update_victory_state(s_control);
 	}
 	
@@ -110,10 +111,10 @@ void start_menu_action(SudokuControl s_control) {
 		case 0:
 			sudoku_reset(s_control->sudoku); //Reset edited board to original state
 			s_control->start_menu_flag = 0;
+			//ZZZ RESET GAME
 			break;
 		case 1: 
-			//ZZZ go to main menu - not implemented
-			s_control->start_menu_flag = 0;
+			s_control->main_menu_flag = 1;
 			break;
 		case 2: 
 			s_control->start_menu_flag = 0;
@@ -166,12 +167,15 @@ void check_main_menu_input(SudokuControl s_control) {
 	s_control->kDown = hidKeysDown();
 	if (s_control->kDown & KEY_START) {
 		s_control->main_menu_flag = 0;
+		reset_control_state(s_control);
 		create_new_game(s_control);
 		
 	} else if (s_control->kDown & KEY_L) {
-		s_control->percentage = s_control->percentage+10 % 100;
+		s_control->percentage = s_control->percentage+10;
+		if (s_control->percentage > 90) s_control->percentage = 30;
 	} else if (s_control->kDown & KEY_R) {
-		s_control->percentage = s_control->percentage-10 % 100;
+		s_control->percentage = s_control->percentage-10;
+		if (s_control->percentage < 30) s_control->percentage = 90;
 	}
 }
 
@@ -183,12 +187,15 @@ void update_main_menu_state(SudokuControl s_control) {
 
 //Controls the game input/update/draw flow.
 void control_game(SudokuControl s_control) {
-	if (s_control->main_menu_flag == 1) {
+	if (s_control->main_menu_flag == 1) { //ALL Main menu control and drawing is here.
 		update_main_menu_state(s_control); 
 		start_draw(s_control->sudoku_gfx, GFX_TOP);
 		draw_main_menu(s_control->sudoku_gfx, s_control->percentage);
 		
 		end_draw(); 
+		start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
+		draw_main_menu(s_control->sudoku_gfx, s_control->percentage);
+		end_draw();
 		end();
 		return;
 	}
@@ -205,7 +212,23 @@ void control_game(SudokuControl s_control) {
 	
 }
 
+//zzz Need to make sure everything is being reset here.
+void reset_control_state(SudokuControl s_control) {
+	create_new_game(s_control); //Creates a new game
+	s_control->start_menu_flag = 0;
+	s_control->start_cursor = 0;
+	s_control->cursor = 0,
+	s_control->main_cursor = 0;
+	s_control->exit_flag = 0;
+	s_control->victory_flag = 0;
+	s_control->allow_input_flag = 1;
+	s_control->reset_flag = 0;
+	s_control->main_menu_flag = 0;
+	s_control->score = 0;
+}
 
+
+//This is used to create a new game on victory.
 void create_new_game(SudokuControl s_control) {
 	s_control->sudoku_gfx->victory_frame = 0;
 	s_control->allow_input_flag = 1;
@@ -277,7 +300,7 @@ SudokuControl initialize_game(int size, int percentage) {
 	s_control->allow_input_flag = 1;
 	s_control->reset_flag = 0;
 	s_control->main_menu_flag = 1;
-	s_control->flip = 0;
+	s_control->score = 0;
 	
 	
 	//Set-up textures
