@@ -18,6 +18,7 @@ struct _SudokuGFX {
 	sf2d_texture *immut_numbers, *mut_numbers, *selector;
 	sf2d_texture *start_menu, *start_selector, *text_quit_game, *text_reset, *text_main_menu;
 	sf2d_texture *victory;
+	sf2d_texture *main_menu_bg;
 	int top_frame, bottom_frame, victory_frame, bg_count;
 }; 
 typedef struct _SudokuGFX *SudokuGFX; 

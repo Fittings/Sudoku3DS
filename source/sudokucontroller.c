@@ -190,11 +190,11 @@ void control_game(SudokuControl s_control) {
 	if (s_control->main_menu_flag == 1) { //ALL Main menu control and drawing is here.
 		update_main_menu_state(s_control); 
 		start_draw(s_control->sudoku_gfx, GFX_TOP);
-		draw_main_menu(s_control->sudoku_gfx, s_control->percentage);
+		draw_main_menu(s_control->sudoku_gfx, s_control->percentage, GFX_TOP);
 		
 		end_draw(); 
 		start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
-		draw_main_menu(s_control->sudoku_gfx, s_control->percentage);
+		draw_main_menu(s_control->sudoku_gfx, s_control->percentage, GFX_TOP);
 		end_draw();
 		end();
 		return;

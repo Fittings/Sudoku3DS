@@ -31,6 +31,9 @@
 //Victory
 #include "victory_bin.h"
 
+//Main Menu
+#include "main_menu_bg_bin.h"
+
 
 /* This file is a struct dedicated to loading and keeping
  * control of variables needed by other graphics classes.
@@ -69,6 +72,9 @@ SudokuGFX SudokuGFX_init() {
 	
 	//Victory
 	my_gfx->victory			= sfil_load_PNG_buffer(victory_bin, SF2D_PLACE_RAM);
+	
+	//Load Main Menu Images
+	my_gfx->main_menu_bg 	= sfil_load_PNG_buffer(main_menu_bg_bin, SF2D_PLACE_RAM);
 	
 	return my_gfx;
 }

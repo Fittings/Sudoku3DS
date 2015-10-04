@@ -6,6 +6,6 @@
 #include "gfx_info.h"
 
 
-extern void draw_main_menu(SudokuGFX s_gfx, int percentage);
+extern void draw_main_menu(SudokuGFX s_gfx, int percentage, gfxScreen_t screen);
 
 #endif
