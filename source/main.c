@@ -19,7 +19,7 @@
 
 //Some globals for easy modifications
 #define SU_SIZE 9
-#define SU_RAND 95
+#define SU_RAND 30
 
 
 

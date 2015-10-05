@@ -171,11 +171,11 @@ void check_main_menu_input(SudokuControl s_control) {
 		create_new_game(s_control);
 		
 	} else if (s_control->kDown & KEY_L) {
-		s_control->percentage = s_control->percentage+10;
-		if (s_control->percentage > 90) s_control->percentage = 30;
+		s_control->percentage = s_control->percentage+5;
+		if (s_control->percentage > 90) s_control->percentage = 90;
 	} else if (s_control->kDown & KEY_R) {
-		s_control->percentage = s_control->percentage-10;
-		if (s_control->percentage < 30) s_control->percentage = 90;
+		s_control->percentage = s_control->percentage-5;
+		if (s_control->percentage < 30) s_control->percentage = 30;
 	}
 }
 
@@ -189,14 +189,21 @@ void update_main_menu_state(SudokuControl s_control) {
 void control_game(SudokuControl s_control) {
 	if (s_control->main_menu_flag == 1) { //ALL Main menu control and drawing is here.
 		update_main_menu_state(s_control); 
-		start_draw(s_control->sudoku_gfx, GFX_TOP);
-		draw_main_menu(s_control->sudoku_gfx, s_control->percentage, GFX_TOP);
 		
-		end_draw(); 
-		start_draw(s_control->sudoku_gfx, GFX_BOTTOM);
-		draw_main_menu(s_control->sudoku_gfx, s_control->percentage, GFX_TOP);
+		start_draw(s_control->sudoku_gfx, GFX_LEFT); //DRAW TOP
+		draw_main_menu_bg(s_control->sudoku_gfx, GFX_TOP);
+		draw_main_menu_logo(s_control->sudoku_gfx);
+		//draw_main_menu_start(s_control->sudoku_gfx);
 		end_draw();
+		 
+		start_draw(s_control->sudoku_gfx, GFX_BOTTOM); //DRAW BOTTOM
+		draw_main_menu_bg(s_control->sudoku_gfx, GFX_TOP);
+		draw_main_menu_difficulty(s_control->sudoku_gfx, s_control->percentage);
+		end_draw();
+		
 		end();
+	
+	
 		return;
 	}
 		

@@ -33,6 +33,7 @@
 
 //Main Menu
 #include "main_menu_bg_bin.h"
+#include "main_menu_difficulty_bin.h"
 
 
 /* This file is a struct dedicated to loading and keeping
@@ -75,6 +76,7 @@ SudokuGFX SudokuGFX_init() {
 	
 	//Load Main Menu Images
 	my_gfx->main_menu_bg 	= sfil_load_PNG_buffer(main_menu_bg_bin, SF2D_PLACE_RAM);
+	my_gfx->main_menu_difficulty = sfil_load_PNG_buffer(main_menu_difficulty_bin, SF2D_PLACE_RAM);
 	
 	return my_gfx;
 }
