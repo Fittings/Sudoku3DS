@@ -17,7 +17,7 @@ Sudoku sudoku_new(int n, int seed) {
 	memset(my_sudoku->edit_array, 0, my_sudoku->size * sizeof(int));
 	memset(my_sudoku->sudoku_array, 0, my_sudoku->size * sizeof(int));
 	//srand(time(NULL));
-	//srand(seed);
+	srand(seed);
 	return my_sudoku;
 }
 

@@ -28,3 +28,5 @@ void draw_sudoku(SudokuGFX s_gfx, int *sudoku_array, int *edit_array, int size, 
 		row++;
 	} 
 }
+
+

@@ -30,8 +30,8 @@ void draw_main_menu_bg(SudokuGFX s_gfx, gfxScreen_t screen) {
 	sf2d_draw_texture(s_gfx->main_menu_bg, 0,  bg2_xpos2);
 	
 	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xFF, 0xFF, 0xFF, 0xBB));
-
-		
+	
+	
 
 	
 }
@@ -47,11 +47,7 @@ void draw_main_menu_logo(SudokuGFX s_gfx) {
 }
 
 void draw_main_menu_difficulty(SudokuGFX s_gfx, int percentage) {
-	//int pos = 130; main_menu_difficulty
-	//sf2d_draw_rectangle(0, 110, TOP_W, 40, RGBA8(0xFF, 0x97, 0x89, 0xFF));
-	//sf2d_draw_texture(s_gfx->main_menu_difficulty, 0,  110);
-	//sf2d_draw_texture(s_gfx->main_menu_difficulty, -95,  110);
-	sf2d_draw_rectangle(275-(percentage*2), 120,110, 10, RGBA8(0x00, 0x00, 0x00, 0xFB)); //pos of box
-	//sf2d_draw_rectangle(95, 110, 190-(percentage*2), 10, RGBA8(0x00, 0x00, 0x00, 0xFB)); //pos of box
-	//sf2d_draw_rectangle(0, 110, 190-(percentage*2), 10, RGBA8(0x00, 0x00, 0x00, 0xFB)); //pos of box
+	sf2d_draw_rectangle(0, 120, TOP_W, 10, RGBA8(0xFF, 0x97, 0x89, 0xFF));
+	sf2d_draw_texture(s_gfx->main_menu_difficulty, 0,  120);
+	sf2d_draw_rectangle(279-(percentage*2), 119,3, 12, RGBA8(0x00, 0x00, 0x00, 0xFB)); //pos of box
 }

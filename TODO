@@ -1,31 +1,14 @@
 	#PORT SOLVER
 Port over my solver from java. Need to include a bunch of methods --Med priority
 
-	#VISUAL
-Victory animation - Improve
-Main Menu animation
 
 	#INPUT
 Take touch input. 		--Med priority
 Handle held-down input. --Low priority. Not important for this game.
-Y/X button sets space to 0
 
-	#CODE FORMATTING
-Clean up the files. Add things to gitignore and all that good stuff!
-
-	#Functionality
-Add Main menu
-	*-> difficulty
 
 	#MAKEFILE
 Set it up to save correctly. Into a dedicated folder for 3DS files.
-
-	#OPTIMIZE 
-draw only when change occurs //Only start frame when needed
-
-	#BUG
-Currently has a bug where it generates the same puzzle everytime. IDK Why
-
 
 
 

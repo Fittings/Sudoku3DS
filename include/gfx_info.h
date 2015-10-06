@@ -20,6 +20,7 @@ struct _SudokuGFX {
 	sf2d_texture *victory;
 	sf2d_texture *main_menu_bg, *main_menu_difficulty;
 	int top_frame, bottom_frame, victory_frame, bg_count;
+
 }; 
 typedef struct _SudokuGFX *SudokuGFX; 
 
@@ -30,7 +31,7 @@ extern SudokuGFX SudokuGFX_init();
 extern void sudoku_gfx_free(SudokuGFX s_gfx);
 
 extern void init_background(SudokuGFX s_gfx);
-
+extern void init_positions(SudokuGFX s_gfx);
 
 extern void draw_board();
 

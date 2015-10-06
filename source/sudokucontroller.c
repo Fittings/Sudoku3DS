@@ -170,12 +170,26 @@ void check_main_menu_input(SudokuControl s_control) {
 		reset_control_state(s_control);
 		create_new_game(s_control);
 		
+	} else if (s_control->kDown & KEY_A) {
+		s_control->main_menu_flag = 0;
+		reset_control_state(s_control);
+		create_new_game(s_control);
 	} else if (s_control->kDown & KEY_L) {
+		s_control->percentage = s_control->percentage+5;
+		if (s_control->percentage > 90) s_control->percentage = 90;
+	} else if (s_control->kDown & KEY_LEFT) {
 		s_control->percentage = s_control->percentage+5;
 		if (s_control->percentage > 90) s_control->percentage = 90;
 	} else if (s_control->kDown & KEY_R) {
 		s_control->percentage = s_control->percentage-5;
 		if (s_control->percentage < 30) s_control->percentage = 30;
+	} else if (s_control->kDown & KEY_RIGHT) {
+		s_control->percentage = s_control->percentage-5;
+		if (s_control->percentage < 30) s_control->percentage = 30;
+	} else if (s_control->kDown & KEY_B) {
+		s_control->exit_flag = 1;
+	} else if (s_control->kDown & KEY_SELECT) {
+		s_control->exit_flag = 1;
 	}
 }
 
@@ -292,7 +306,8 @@ SudokuControl initialize_game(int size, int percentage) {
 		free(s_control);
 		return NULL;
 	}
-	s_control->sudoku = sudoku_unique_setup(size, percentage, svcGetSystemTick());
+	time_t unixTime = time(NULL);
+	s_control->sudoku = sudoku_unique_setup(size, percentage, unixTime);
 	
 	//Set-up variable states
 	s_control->percentage = percentage;

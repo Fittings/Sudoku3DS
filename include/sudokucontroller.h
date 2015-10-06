@@ -3,6 +3,7 @@
 
 
 #include <3ds.h>
+#include <time.h>
 
 
 

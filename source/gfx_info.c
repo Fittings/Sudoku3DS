@@ -81,6 +81,8 @@ SudokuGFX SudokuGFX_init() {
 	return my_gfx;
 }
 
+
+
 //Frees SudokuGFX
 void sudoku_gfx_free(SudokuGFX s_gfx) {
 	sf2d_fini();
@@ -88,6 +90,9 @@ void sudoku_gfx_free(SudokuGFX s_gfx) {
 		free(s_gfx);
 	}
 }
+
+
+
 
 
 //This should be called paired with end_draw()
