@@ -1,9 +1,6 @@
 #include <3ds.h>
 #include"victorygfx.h"
 
-
-
-
 //Handles victory drawing
 void draw_victory(SudokuGFX s_gfx, gfxScreen_t screen) {
 	if (screen == GFX_TOP) {

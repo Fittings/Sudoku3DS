@@ -1,6 +1,5 @@
 #include <3ds.h>
 #include <gfx_info.h>
-
 #include "menugfx.h"
 
 
@@ -30,20 +29,12 @@ void draw_main_menu_bg(SudokuGFX s_gfx, gfxScreen_t screen) {
 	sf2d_draw_texture(s_gfx->main_menu_bg, 0,  bg2_xpos2);
 	
 	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0xFF, 0xFF, 0xFF, 0xBB));
-	
-	
-
-	
 }
-
-
-
 
 void draw_main_menu_logo(SudokuGFX s_gfx) {
 	sf2d_draw_rectangle(0, 97, TOP_W, 40, RGBA8(0xFF, 0x97, 0x89, 0xFF)); //bar
 	sf2d_draw_texture(s_gfx->icon, 345, 93); //icon
 	sf2d_draw_texture(s_gfx->text_sudoku3ds, 268, 124); //text
-
 }
 
 void draw_main_menu_difficulty(SudokuGFX s_gfx, int percentage) {

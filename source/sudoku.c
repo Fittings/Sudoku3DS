@@ -314,7 +314,6 @@ void sudoku_flip_hori(Sudoku sudoku) {
 			int tmpIx = mod_siz + ((size-1) - div_siz) * size;
 			sudoku->sudoku_array[i] = sudoku->sudoku_array[tmpIx];
 			sudoku->sudoku_array[tmpIx] = tmp;
-			
 		}
 	}
 }
@@ -331,13 +330,8 @@ void sudoku_flip_dia1(Sudoku sudoku) {
 			int tmpIx = (size-1 - mod_siz) * size + size-1 - div_siz;
 			sudoku->sudoku_array[i] = sudoku->sudoku_array[tmpIx];
 			sudoku->sudoku_array[tmpIx] = tmp;
-			
 		}
 	}
-	
-
-
-
 }
 
 //Flips numbers across the diagonal /

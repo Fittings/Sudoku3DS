@@ -56,10 +56,6 @@ void check_main_input(SudokuControl s_control) {
 }
 
 
-
-
-
-
 //Updates the s_control struct with 
 void update_sudoku_input(SudokuControl s_control) {
 	if (!s_control->kDown) return; //No key press.
@@ -98,11 +94,8 @@ void draw_main_state_bottom(SudokuControl s_control) {
 	int x_offset = BOTTOM_W/2 - ((size*TILE_SIZE)/2) - (2 * 2); 
 	int y_offset = 2 + BOTTOM_H/2 - ((size*TILE_SIZE)/2) - (2 * 2); //ZZZ A little bit of magic numbers 
 	draw_bottom_background(s_control->sudoku_gfx);
-	draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset, s_control->cursor);
-	
+	draw_sudoku(s_control->sudoku_gfx, s_control->sudoku->sudoku_array, s_control->sudoku->edit_array, size, x_offset, y_offset, s_control->cursor);	
 }
-
-
 
 
 //Input handling for when the start menu is open
@@ -197,8 +190,6 @@ void update_main_menu_state(SudokuControl s_control) {
 	check_main_menu_input(s_control);
 }
 
-
-
 //Controls the game input/update/draw flow.
 void control_game(SudokuControl s_control) {
 	if (s_control->main_menu_flag == 1) { //ALL Main menu control and drawing is here.
@@ -289,9 +280,7 @@ void draw_game(SudokuControl s_control) {
 	end_draw(); 
 	end();
 	//END BOTTOM
-
 }
-
 
 
 /* Initializes all the variables used for tracking. 
@@ -324,7 +313,6 @@ SudokuControl initialize_game(int size, int percentage) {
 	s_control->main_menu_flag = 1;
 	s_control->score = 0;
 	
-	
 	//Set-up textures
 	s_control->sudoku_gfx = malloc(sizeof s_control->sudoku_gfx);
 	if (s_control->sudoku == NULL) {
@@ -335,7 +323,6 @@ SudokuControl initialize_game(int size, int percentage) {
 
 	return s_control;
 }
-
 
 void sudoku_control_free(SudokuControl s_control) {
 	if (s_control != NULL) {

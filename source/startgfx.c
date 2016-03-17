@@ -3,9 +3,6 @@
 
 #include "startgfx.h"
 
-
-
-
 void draw_start_gfx_top(SudokuGFX s_gfx, int cursor) {
 	sf2d_draw_rectangle(0, 0, TOP_W, TOP_H, RGBA8(0x00, 0x00, 0x00, 0x88));  //dampen bg
 	//sf2d_draw_rectangle(65, 80, 270, 80, RGBA8(0x33, 0x7A, 0x87, 0xFF)); //temp background image. See refs for ideal start menu
